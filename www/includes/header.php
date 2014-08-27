@@ -6,7 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/api/_functions.php");
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Exchange</title>
+        <title>Subtoshi</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="/bootstrap-3.2.0/css/bootstrap.css">
