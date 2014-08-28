@@ -1023,7 +1023,7 @@ function sendWithrawEmail($coin,$amount,$address,$payment_id,$hash){
     $mail->AddAddress($_SESSION['user_email']);
     $mail->Subject = "Confirm withrawal request";
 
-    $link = 'http://subtoshi.com:8083/confirm_withdrawal.php?verification_code='.urlencode($hash);
+    $link = 'https://subtoshi.com/confirm_withdrawal.php?verification_code='.urlencode($hash);
 
     // the link to your register.php, please set this value in config/email_verification.php
     

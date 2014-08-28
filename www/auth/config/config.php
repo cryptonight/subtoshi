@@ -73,7 +73,7 @@ define("EMAIL_SMTP_ENCRYPTION", "ssl");
  * Configuration for: password reset email data
  * Set the absolute URL to password_reset.php, necessary for email password reset links
  */
-define("EMAIL_PASSWORDRESET_URL", "http://subtoshi.com:8083/auth/password_reset");
+define("EMAIL_PASSWORDRESET_URL", "https://subtoshi.com/auth/password_reset");
 define("EMAIL_PASSWORDRESET_FROM", "noreply@subtoshi.com");
 define("EMAIL_PASSWORDRESET_FROM_NAME", "noreply");
 define("EMAIL_PASSWORDRESET_SUBJECT", "Password reset for subtoshi.com");
@@ -83,7 +83,7 @@ define("EMAIL_PASSWORDRESET_CONTENT", "<h2>Subtoshi.com</h2><h3>Password reset</
  * Configuration for: verification email data
  * Set the absolute URL to register.php, necessary for email verification links
  */
-define("EMAIL_VERIFICATION_URL", "http://subtoshi.com:8083/auth/login");
+define("EMAIL_VERIFICATION_URL", "https://subtoshi.com/auth/login");
 define("EMAIL_VERIFICATION_FROM", "noreply@subtoshi.com");
 define("EMAIL_VERIFICATION_FROM_NAME", "noreply");
 define("EMAIL_VERIFICATION_SUBJECT", "Account activation for subtoshi.com");
