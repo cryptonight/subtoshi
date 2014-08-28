@@ -351,7 +351,6 @@ function loadMarketOrders(){
 	    var total = format8(math.eval(price+"*"+amount+"/100000000"));
       rows += "<tr><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>";
       volume = xpnd(math.eval(volume+"+"+amount));
-      active_sells.push(price);
     });
     $("#sellorders").html(rows);
     $("#sellvolume").html(format8(volume));
@@ -367,7 +366,6 @@ function loadMarketOrders(){
       rows += "<tr><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>";
       var toadd = xpnd(math.eval(price+"*"+amount+"/100000000"));
       volume = xpnd(math.eval(volume+"+"+toadd));
-      active_buys.push(price);
     });
     $("#buyorders").html(rows);
     $("#buyvolume").html(format8(volume));
@@ -388,7 +386,8 @@ function loadActiveOrders(){
   	    var theFunction = 'cancelOrder("'+data.result[i].id+'");return false;';
         var action = "<input type='button' value='cancel' class='btn btn-xs btn-danger' onclick='"+theFunction+"'>";
   	    rows += "<tr><td>"+data.result[i]['creation_time']+"</td><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td><td>"+filled+"</td><td>"+totalfilled+"</td><td>"+action+"</td></tr>"
-      }
+        active_buys.push(price);
+	    }
     }
 	  $("#active_buy_orders").html(rows);
 	}, "json" );
@@ -404,7 +403,8 @@ function loadActiveOrders(){
   	    var theFunction = 'cancelOrder("'+data.result[i].id+'");return false;';
         var action = "<input type='button' value='cancel' class='btn btn-xs btn-danger' onclick='"+theFunction+"'>";
   	    rows += "<tr><td>"+data.result[i]['creation_time']+"</td><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td><td>"+filled+"</td><td>"+totalfilled+"</td><td>"+action+"</td></tr>"
-  	  }
+  	    active_sells.push(price);
+	    }
 	  }
 	  $("#active_sell_orders").html(rows);
 	}, "json" );
