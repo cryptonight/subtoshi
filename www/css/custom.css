@@ -57,7 +57,17 @@ html, body {
     color: #808080;
 }
 
-.panel-title .smallNumber {
+.panel-heading .smallNumber {
     font-size:0.7em;
     color: #FFF;
+}
+
+.panel-title-right {
+    float:right;
+    font-size:0.9em;
+    padding-top:0.1em;
+}
+
+.panel-heading {
+    overflow:hidden;
 }

@@ -22,7 +22,7 @@
     <div class="col-md-6">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Buy <?php echo strtoupper($_GET['coin']); ?><span style="float:right;">You have <span id="balance-btc"></span> BTC</span></h3>
+            <h3 class="panel-title">Buy <?php echo strtoupper($_GET['coin']); ?><span class="panel-title-right">You have <span id="balance-btc"></span> BTC</span></h3>
           </div>
           <div class="panel-body">
             <form class="form-horizontal" role="form">
@@ -76,7 +76,7 @@
     <div class="col-md-6">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Sell <?php echo strtoupper($_GET['coin']); ?><span style="float:right;">You have <span id="balance-coin"></span> <?php echo strtoupper($_GET['coin']); ?></span></h3>
+            <h3 class="panel-title">Sell <?php echo strtoupper($_GET['coin']); ?><span class="panel-title-right">You have <span id="balance-coin"></span> <?php echo strtoupper($_GET['coin']); ?></span></h3>
           </div>
           <div class="panel-body">
               <form class="form-horizontal" role="form">
@@ -133,7 +133,7 @@
     <div class="col-md-6">
     <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Sell Orders<span style="float:right;">Total: <span id="sellvolume"></span> <?php echo strtoupper($_GET['coin']); ?></span></h3>
+            <h3 class="panel-title">Sell Orders<span class="panel-title-right">Total: <span id="sellvolume"></span> <?php echo strtoupper($_GET['coin']); ?></span></h3>
           </div>
           <div class="panel-body" style="max-height:300px; overflow:auto; padding:10px;">
           
@@ -151,7 +151,7 @@
     <div class="col-md-6">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Buy Orders<span style="float:right;">Total: <span id="buyvolume"></span> BTC</span></h3>
+            <h3 class="panel-title">Buy Orders<span class="panel-title-right">Total: <span id="buyvolume"></span> BTC</span></h3>
           </div>
           <div class="panel-body" style="max-height:300px; overflow:auto; padding:10px;">
           
