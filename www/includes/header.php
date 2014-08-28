@@ -58,7 +58,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/api/_functions.php");
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <?php session_start(); if(isset($_SESSION['user_id']) && !isset($_GET['logout'])){ ?>
-                        <p class="navbar-text">Welcome, <?php echo $_SESSION['user_name']; ?></p>
+                        <p class="navbar-text" style="padding-left:15px;">Welcome, <?php echo $_SESSION['user_name']; ?></p>
                         <li id="logout"><a href="/auth/login?logout"><i class="fa fa-sign-out"></i> Logout</a></li>
                         <?php }else{ ?>
                         <li id="signup"><a href="/auth/register"><i class="fa fa-users"></i> Sign up</a></li>
