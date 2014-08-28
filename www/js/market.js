@@ -163,9 +163,9 @@ function isPlacedSell(a){
 }
 
 function enoughBuy(total){
-	return math.compare(balance_btc,total) >= 0;
+	return parseInt(math.compare(math.bignumber(balance_btc),math.bignumber(total))+"") >= 0;
 }
 
 function enoughSell(amount){
-	return math.compare(balance_coin,amount) >= 0;
+	return parseInt(math.compare(math.bignumber(balance_coin),math.bignumber(amount))+"") >= 0;
 }
