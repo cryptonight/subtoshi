@@ -19,9 +19,6 @@ require_once("../auth/libraries/PHPMailer.php");
 *For example, I store payment ids in the "address" database
 */
 
-//Set BC Math scale.  22 becuase 11 decimals in a satoshi, plus 9 decimals in the coin, plus the 3 decimals in the 0.005 fee
-bcscale(22);
-
 $method = preg_replace("/[^a-zA-Z0-9]+/", "", $_POST['method']);
 if(isset($_POST['coin'])){
     $coin = preg_replace("/[^a-zA-Z0-9]+/", "", strtolower($_POST['coin']));
