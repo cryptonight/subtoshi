@@ -6,6 +6,7 @@
   <h4>Transaction History</h4>
 </div>
 
+<div style="width:100%; overflow:auto;">
 <table class="table table-bordered">
   <thead>
     <tr><th>Market</th><th>Type</th><th>Date (UTC)</th><th>Price</th><th>Amount</th><th>0.5% Fee</th><th>Total</th></tr>
@@ -13,6 +14,7 @@
   <tbody id="history">
   </tbody>
   </table>
+  </div>
 
 </div>
 
