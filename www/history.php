@@ -26,7 +26,7 @@ $.post( "api/api", { method: "getTransactionHistory" }, function( data ) {
         var total = math.eval(price+"*"+amount+"/100000000");
         var fee = "";
         var fee_coin = "";
-        if(data.result.type == "sell"){
+        if(data.result[i].type == "sell"){
             fee = math.eval(total+"*0.005");
             fee_coin = "BTC";
             total = math.eval(total+"*0.995");
