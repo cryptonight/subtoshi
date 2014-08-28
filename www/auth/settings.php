@@ -61,8 +61,6 @@ if ($login->isUserLoggedIn() == false) {
     </div>
 </form><hr/>
 
-
-
 <!-- edit form for user's password / this form uses the HTML5 attribute "required" -->
 <form method="post" action="settings" name="user_edit_form_password" class="form-horizontal" role="form">
     <div style="margin-bottom: 25px" class="input-group">

@@ -463,7 +463,8 @@ class Login
      * Edit the user's email, provided in the editing form
      */
     public function editUserEmail($user_email)
-    {
+    {   
+        return false;
         // prevent database flooding
         $user_email = substr(trim($user_email), 0, 64);
 
