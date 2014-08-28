@@ -71,3 +71,7 @@ html, body {
 .panel-heading {
     overflow:hidden;
 }
+
+i.price, i.coin, i.amount, i.btc {
+    color:#BBB;
+}

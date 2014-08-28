@@ -27,7 +27,7 @@
           <div class="panel-body">
             <form class="form-horizontal" role="form">
                 <div class="form-group">
-                  <label for="buyorder_price" class="col-sm-2 control-label" style="padding-right:0; text-align:left;">Price</label>
+                  <label for="buyorder_price" class="col-sm-2 control-label price" style="padding-right:0; text-align:left;">Price</label>
                   <div class="col-sm-10">
                     <div class="input-group" style="padding-right:5px; padding-left:5px; width:100%;">
                     <input type="text" class="form-control" id="buyorder_price" placeholder="Price" onkeyup="calcbuytotal();">
@@ -36,7 +36,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="buyorder_size" class="col-sm-2 control-label" style="padding-right:0; text-align:left;">Amount</label>
+                  <label for="buyorder_size" class="col-sm-2 control-label amount" style="padding-right:0; text-align:left;">Amount</label>
                   <div class="col-sm-10">
                   <div class="input-group" style="padding-right:5px; padding-left:5px; width:100%;">
                     <input type="text" class="form-control" id="buyorder_size" placeholder="Amount" onkeyup="calcbuytotal();">
@@ -81,7 +81,7 @@
           <div class="panel-body">
               <form class="form-horizontal" role="form">
                 <div class="form-group">
-                  <label for="sellorder_price" class="col-sm-2 control-label" style="padding-right:0; text-align:left;">Price</label>
+                  <label for="sellorder_price" class="col-sm-2 control-label price" style="padding-right:0; text-align:left;">Price</label>
                   <div class="col-sm-10">
                     <div class="input-group" style="padding-right:5px; padding-left:5px; width:100%;">
                     <input type="text" class="form-control" id="sellorder_price" placeholder="Price" onkeyup="calcselltotal();">
@@ -90,7 +90,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="sellorder_size" class="col-sm-2 control-label" style="padding-right:0; text-align:left;">Amount</label>
+                  <label for="sellorder_size" class="col-sm-2 control-label amount" style="padding-right:0; text-align:left;">Amount</label>
                   <div class="col-sm-10">
                   <div class="input-group" style="padding-right:5px; padding-left:5px; width:100%;">
                     <input type="text" class="form-control" id="sellorder_size" placeholder="Amount" onkeyup="calcselltotal();">
@@ -131,24 +131,6 @@
     
     <div class="row">
     <div class="col-md-6">
-    <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Sell Orders<span class="panel-title-right">Total: <span id="sellvolume"></span> <?php echo strtoupper($_GET['coin']); ?></span></h3>
-          </div>
-          <div class="panel-body" style="max-height:300px; overflow:auto; padding:10px;">
-          
-            <table class="table table-condensed">
-            <thead>
-            <tr><th>Price</th><th><?php echo strtoupper($_GET['coin']); ?></th><th>BTC</th></tr>
-            </thead>
-            <tbody id="sellorders">
-            </tbody>
-            </table>
-          
-          </div>
-    </div>
-    </div>
-    <div class="col-md-6">
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">Buy Orders<span class="panel-title-right">Total: <span id="buyvolume"></span> BTC</span></h3>
@@ -157,9 +139,27 @@
           
             <table class="table table-condensed">
             <thead>
-            <tr><th>Price</th><th><?php echo strtoupper($_GET['coin']); ?></th><th>BTC</th></tr>
+            <tr><th>Price <i class="fa fa-question-circle fa-fw price"></i></th><th><?php echo strtoupper($_GET['coin']); ?> <i class="fa fa-question-circle fa-fw coin"></i></th><th>BTC <i class="fa fa-question-circle fa-fw btc"></i></th></tr>
             </thead>
             <tbody id="buyorders">
+            </tbody>
+            </table>
+          
+          </div>
+    </div>
+    </div>
+    <div class="col-md-6">
+    <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Sell Orders<span class="panel-title-right">Total: <span id="sellvolume"></span> <?php echo strtoupper($_GET['coin']); ?></span></h3>
+          </div>
+          <div class="panel-body" style="max-height:300px; overflow:auto; padding:10px;">
+          
+            <table class="table table-condensed">
+            <thead>
+            <tr><th>Price <i class="fa fa-question-circle fa-fw price"></i></th><th><?php echo strtoupper($_GET['coin']); ?> <i class="fa fa-question-circle fa-fw coin"></i></th><th>BTC <i class="fa fa-question-circle fa-fw btc"></i></th></tr>
+            </thead>
+            <tbody id="sellorders">
             </tbody>
             </table>
           
@@ -177,7 +177,7 @@
           <div class="panel-body" style="max-height:300px; overflow:auto; padding:10px;">
             <table class="table table-condensed">
             <thead>
-            <tr><th>Date (UTC)</th><th>Price</th><th><?php echo strtoupper($_GET['coin']); ?></th><th>BTC</th><th>Filled (<?php echo strtoupper($_GET['coin']); ?>)</th><th>Filled (BTC)</th><th> </th></tr>
+            <tr><th>Date (UTC)</th><th><span class="price">Price</span></th><th><span class="coin"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th><th>Filled (<?php echo strtoupper($_GET['coin']); ?>)</th><th>Filled (BTC)</th><th> </th></tr>
             </thead>
             <tbody id="active_sell_orders">
             </tbody>
@@ -197,7 +197,7 @@
           <div class="panel-body" style="max-height:300px; overflow:auto; padding:10px;">
             <table class="table table-condensed">
             <thead>
-            <tr><th>Date (UTC)</th><th>Price</th><th><?php echo strtoupper($_GET['coin']); ?></th><th>BTC</th><th>Filled (<?php echo strtoupper($_GET['coin']); ?>)</th><th>Filled (BTC)</th><th> </th></tr>
+            <tr><th>Date (UTC)</th><th><span class="price">Price</span></th><th><span class="coin"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th><th>Filled (<?php echo strtoupper($_GET['coin']); ?>)</th><th>Filled (BTC)</th><th> </th></tr>
             </thead>
             <tbody id="active_buy_orders">
             </tbody>
@@ -217,7 +217,7 @@
           <div class="panel-body" style="max-height:300px; overflow:auto; padding:10px;">
             <table class="table table-condensed">
             <thead>
-            <tr><th>Date (UTC)</th><th>Price</th><th><?php echo strtoupper($_GET['coin']); ?></th><th>BTC</th></tr>
+            <tr><th>Date (UTC)</th><th><span class="price">Price</span></th><th><span class="coin"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th></tr>
             </thead>
             <tbody id="markethistory">
             </tbody>
@@ -273,6 +273,7 @@
 <script>
 window.onload = function(){
 		loadData();
+		addTooltips();
 		<?php if(!isset($_SESSION['user_id'])){ ?>
 		disableForms();
 		<?php } ?>
@@ -443,6 +444,29 @@ bootbox.dialog({
     }
   }
 });
+}
+
+//Tooltips
+function addTooltips(){
+  $( ".price" ).each(function( index ) {
+    addTooltip(this,"The price per coin in satoshi");
+  });
+  $( ".amount" ).each(function( index ) {
+    addTooltip(this,"The amount you want to buy/sell");
+  });
+  $( ".coin" ).each(function( index ) {
+    addTooltip(this,"The amount of <?php echo getname($_GET['coin']); ?> being bought/sold");
+  });
+  $( ".btc" ).each(function( index ) {
+    addTooltip(this,"The total in BTC");
+  });
+  $('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
+}
+
+function addTooltip(elm,text){
+  $(elm).attr("data-toggle","tooltip");
+  $(elm).attr("data-placement","top");
+  $(elm).attr("title",text);
 }
 
 </script>
