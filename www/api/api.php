@@ -537,23 +537,23 @@ function getBalance($coin){
     for($i=0;$i<count($transactions);$i++){
         $out = bcadd($out, $transactions[$i]["amount"]);
     }
-    $fee = bcmul($in, "0.005");
-    $out = bcadd($out, $fee);
+    $fee = bcmul($in, "0.005",3);
+    $out = bcadd($out, $fee,3);
     $orders = getOrders($coin,"sell");
     for($i=0;$i<count($orders);$i++){
         if($orders[$i]['canceled'] !== '1'){
           $amt = bcsub($orders[$i]['amount'],$orders[$i]['filled']);
           $hold = bcadd($hold,$amt);
-          $out = bcadd($out, $amt);
+          $out = bcadd($out, $amt,3);
         }
     }
     
     $active = bcadd($active, $in);
     
     $totalWithdrawals = getWithdrawalsSum($coin);
-    $out = bcadd($out,$totalWithdrawals);
+    $out = bcadd($out,$totalWithdrawals,3);
     
-    $active = bcsub($active, $out);
+    $active = bcsub($active, $out,3);
     
     return array("active" => $active, "pending" => $pending, "hold" => $hold);
 }
@@ -587,8 +587,8 @@ function getBalanceBTC(){
         }
     }
     
-    $fee = bcmul($in, "0.005");
-    $out = bcadd($out, $fee);
+    $fee = bcmul($in, "0.005",3);
+    $out = bcadd($out, $fee,3);
     
     for($i=0;$i<count($coins);$i++){
         $orders = getOrders($coins[$i],"buy");
@@ -596,7 +596,7 @@ function getBalanceBTC(){
             if($orders[$j]['canceled'] !== '1'){
               $amt = bcsub($orders[$j]['amount'],$orders[$j]['filled']);
               $hold = bcadd($hold,bcmul($amt,$orders[$j]['price']));
-              $out = bcadd($out,bcmul($amt,$orders[$j]['price']));
+              $out = bcadd($out,bcmul($amt,$orders[$j]['price']),3);
             }
         }
     }
@@ -605,9 +605,9 @@ function getBalanceBTC(){
     
     $totalWithdrawals = getWithdrawalsSum("btc");
     $totalWithdrawals = bcmul($totalWithdrawals,"100000000000");
-    $out = bcadd($out,$totalWithdrawals);
+    $out = bcadd($out,$totalWithdrawals,3);
     
-    $active = bcsub($active, $out);
+    $active = bcsub($active, $out,3);
     
     return array("active" => $active, "pending" => $pending, "hold" => $hold);
     

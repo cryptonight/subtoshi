@@ -312,7 +312,6 @@ bootbox.dialog({
       callback: function() {
         $.post( "/api/api",{ method: "cancelWithdrawal", hash: w_hash}, function( data ) {
           updateData();
-          console.log(data);
         }, "json" );
       }
     }
