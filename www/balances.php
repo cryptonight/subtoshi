@@ -213,6 +213,7 @@ function loadBalances(){
       $("#"+data.ticker+"-active").html(format8(math.eval(data.result.active+"/100000000")+""));
       $("#"+data.ticker+"-hold").html(format8(math.eval(data.result.hold+"/100000000")+""));
       $("#"+data.ticker+"-pending").html(format8(math.eval(data.result.pending+"/100000000")+""));
+      console.log(data.result.ticker + " " + data.result.active);
     }, "json");
     $.post( "api/api", { method: "getPaymentIds", coin: coins[i]["ticker"] }, function( data ) {
       if(data.result.length == 0){

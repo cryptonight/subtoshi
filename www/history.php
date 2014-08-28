@@ -18,22 +18,27 @@
 
 <script>
 
+math.config({
+  number: 'bignumber', // Default type of number: 'number' (default) or 'bignumber'
+  precision: 64        // Number of significant digits for BigNumbers
+});
+
 $.post( "api/api", { method: "getTransactionHistory" }, function( data ) {
     var rows = "";
     for(var i=0;i<data.result.length;i++){
-        var price = math.eval(data.result[i].price+"/1000");
-        var amount = math.eval(data.result[i].amount+"/100000000");
-        var total = math.eval(price+"*"+amount+"/100000000");
+        var price = math.divide(math.bignumber(data.result[i].price),math.bignumber("1000"))+"";
+        var amount = math.divide(math.bignumber(data.result[i].amount),math.bignumber("100000000"))+"";
+        var total = math.divide(math.bignumber(math.multiply(math.bignumber(price),math.bignumber(amount))+""),math.bignumber("100000000"))+"";
         var fee = "";
         var fee_coin = "";
         if(data.result[i].type == "sell"){
-            fee = math.eval(total+"*0.005");
+            fee = math.multiply(math.bignumber(total),math.bignumber("0.005"))+"";
             fee_coin = "BTC";
-            total = math.eval(total+"*0.995");
+            total = math.multiply(math.bignumber(total),math.bignumber("0.995"))+"";
         }else{
-            fee = math.eval(amount+"*0.005");
+            fee = math.multiply(math.bignumber(amount),math.bignumber("0.005"))+"";
             fee_coin = data.result[i].coin.toUpperCase();
-            total = math.eval(amount+"*0.995");
+            total = math.multiply(math.bignumber(amount),math.bignumber("0.995"))+"";
         }
         rows = "<tr><td>BTC/"+data.result[i].coin.toUpperCase()+"</td><td>"+data.result[i].type+"</td><td>"+data.result[i].creation_time+"</td><td>"+price+" Sat</td><td>"+amount+" "+data.result[i].coin.toUpperCase()+"</td><td>"+format8(fee)+" "+fee_coin+"</td><td>"+format8(total)+" "+fee_coin+"</td></tr>"+rows;
     }
