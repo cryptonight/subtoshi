@@ -812,7 +812,7 @@ function addSellOrder($coin, $price, $size){
     			//Now add this transaction to the transaction log
     			//The transaction log is used to determine market history, and logs are also a good thing to keep
     			$stmt = $db2->prepare('INSERT INTO transactions (buyer_id, seller_id, price, size, creation_time, coin) VALUES (:buyer_id, :seller_id, :price, :size, now(), :coin)');
-    			$stmt->execute(array(':buyer_id' => $_SESSION['user_id'], ':seller_id' => $rowplacedby, ':price' => $price, ':size' => $toadd, ':coin' => $coin));
+    			$stmt->execute(array(':buyer_id' => $rowplacedby, ':seller_id' => $_SESSION['user_id'], ':price' => $price, ':size' => $toadd, ':coin' => $coin));
     		}else{ //If the buy order is larger than the sell order we are placing
     			//Fill the sell order completely
     			$filled = $size;
@@ -823,7 +823,7 @@ function addSellOrder($coin, $price, $size){
     			$stmt->execute(array(':id' => $rowid));
     			//We log the transaction for the same reason we logged it before
     			$stmt = $db2->prepare('INSERT INTO transactions (buyer_id, seller_id, price, size, creation_time, coin) VALUES (:buyer_id, :seller_id, :price, :size, now(), :coin)');
-    			$stmt->execute(array(':buyer_id' => $_SESSION['user_id'], ':seller_id' => $rowplacedby, ':price' => $price, ':size' => $size, ':coin' => $coin));
+    			$stmt->execute(array(':buyer_id' => $rowplacedby, ':seller_id' => $_SESSION['user_id'], ':price' => $price, ':size' => $size, ':coin' => $coin));
     		}
     	}
     }
