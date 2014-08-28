@@ -61,18 +61,7 @@ if ($login->isUserLoggedIn() == false) {
     </div>
 </form><hr/>
 
-<!-- edit form for user email / this form uses HTML5 attributes, like "required" and type="email" -->
-<form method="post" action="settings" name="user_edit_form_email" class="form-horizontal" role="form">
-    <div style="margin-bottom: 25px" class="input-group">
-        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-        <input id="user_email" type="email" name="user_email" class="form-control" value="" placeholder="Change email (<?php echo WORDING_CURRENTLY; ?>: <?php echo $_SESSION['user_email']; ?>)" required />
-    </div>
-    <div style="margin-top:15px" class="form-group">
-        <div class="col-sm-12 controls">
-            <input type="submit" name="user_edit_submit_email" class="btn btn-success" value="<?php echo WORDING_CHANGE_EMAIL; ?>" />
-        </div>
-    </div>
-</form><hr/>
+
 
 <!-- edit form for user's password / this form uses the HTML5 attribute "required" -->
 <form method="post" action="settings" name="user_edit_form_password" class="form-horizontal" role="form">
