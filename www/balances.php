@@ -122,6 +122,7 @@ for($i=0;$i<count($coins);$i++){
   <h4>Deposit History</h4>
 </div>
 
+<div style="width:100%; overflow:auto;">
 <table class="table table-bordered">
   <thead>
     <tr><th>Currency</th><th>Amount</th><th>Date (UTC)</th><th>Status</th></tr>
@@ -129,6 +130,7 @@ for($i=0;$i<count($coins);$i++){
   <tbody id="depositHistory">
   </tbody>
   </table>
+  </div>
   
 <hr>
 
@@ -136,6 +138,7 @@ for($i=0;$i<count($coins);$i++){
   <h4>Withdrawal History</h4>
 </div>
 
+<div style="width:100%; overflow:auto;">
 <table class="table table-bordered">
   <thead>
     <tr><th>Currency</th><th>Amount</th><th>Requested on (UTC)</th><th>Verified on (UTC)</th><th>Status</th></tr>
@@ -143,6 +146,7 @@ for($i=0;$i<count($coins);$i++){
   <tbody id="withdrawalHistory">
   </tbody>
   </table>
+  </div>
 
 </div>
 
