@@ -219,18 +219,22 @@ function getDeposits($coin){
             curl_close($ch);
             $data = json_decode($data,true)["txs"];
             for($j=0;$j<count($data);$j++){
-                for($k=0;$k<count($data[$j]['out']);$k++){
-                    if($data[$j]['out'][$k]['addr'] === $payment_ids[$i]){
-                        if(!isset($data[$j]['block_height'])){
-                            array_push($deposits, array("confirms" => "0", "amount" => $data[$j]['out'][$k]['value'].""));
-                        }else{
-                            $coin = "btc";
-                            $block_height = $data[$j]['block_height'];
-                            $amount = $data[$j]['out'][$k]['value'];
-                            $tx_hash = $data[$j]['hash'];
-                            $address = $payment_ids[$i];
-                            $time_stamp = $data[$j]['time'];
-                            logDeposit($coin,$block_height,$amount,$tx_hash,$address,$time_stamp);
+                $tx_result = file_get_contents("https://blockchain.info/q/txresult/".$data[$j]["hash"]."/".$payment_ids[$i]);
+                error_log("TX RESULT: " . $tx_result);
+                if(bccomp($tx_result,"0") > 0){
+                    for($k=0;$k<count($data[$j]['out']);$k++){
+                        if($data[$j]['out'][$k]['addr'] === $payment_ids[$i]){
+                            if(!isset($data[$j]['block_height'])){
+                                array_push($deposits, array("confirms" => "0", "amount" => $data[$j]['out'][$k]['value'].""));
+                            }else{
+                                $coin = "btc";
+                                $block_height = $data[$j]['block_height'];
+                                $amount = $data[$j]['out'][$k]['value'];
+                                $tx_hash = $data[$j]['hash'];
+                                $address = $payment_ids[$i];
+                                $time_stamp = $data[$j]['time'];
+                                logDeposit($coin,$block_height,$amount,$tx_hash,$address,$time_stamp);
+                            }
                         }
                     }
                 }
