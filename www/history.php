@@ -1,5 +1,7 @@
 <?php include("includes/header.php"); ?>
 
+<?php include("includes/logincheck.php"); ?>
+
 <div class="box box-main">
 
 <div class="page-header" style="border-bottom:1px solid #ddd;">
