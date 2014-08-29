@@ -222,20 +222,16 @@ function getDeposits($coin){
                 $tx_result = file_get_contents("https://blockchain.info/q/txresult/".$data[$j]["hash"]."/".$payment_ids[$i]);
                 error_log("TX RESULT: " . $tx_result);
                 if(bccomp($tx_result,"0") > 0){
-                    for($k=0;$k<count($data[$j]['out']);$k++){
-                        if($data[$j]['out'][$k]['addr'] === $payment_ids[$i]){
-                            if(!isset($data[$j]['block_height'])){
-                                array_push($deposits, array("confirms" => "0", "amount" => $data[$j]['out'][$k]['value'].""));
-                            }else{
-                                $coin = "btc";
-                                $block_height = $data[$j]['block_height'];
-                                $amount = $data[$j]['out'][$k]['value'];
-                                $tx_hash = $data[$j]['hash'];
-                                $address = $payment_ids[$i];
-                                $time_stamp = $data[$j]['time'];
-                                logDeposit($coin,$block_height,$amount,$tx_hash,$address,$time_stamp);
-                            }
-                        }
+                    if(!isset($data[$j]['block_height'])){
+                        array_push($deposits, array("confirms" => "0", "amount" => $tx_result));
+                    }else{
+                        $coin = "btc";
+                        $block_height = $data[$j]['block_height'];
+                        $amount = $tx_result;
+                        $tx_hash = $data[$j]['hash'];
+                        $address = $payment_ids[$i];
+                        $time_stamp = $data[$j]['time'];
+                        logDeposit($coin,$block_height,$amount,$tx_hash,$address,$time_stamp);
                     }
                 }
             }
@@ -876,8 +872,8 @@ function requestWithdrawal($coin,$address,$amount2,$payment_id){
         $user = '***REMOVED***';
         $pass = '***REMOVED***';
         $db = new PDO($dns, $user, $pass);
-        $stmt = $db->prepare('INSERT INTO withdrawals (placed_by,size,verify_hash,verified,creation_time,address,coin,payment_id) VALUES (:placed_by,:size,:verify_hash,:verified,now(),:address,:coin,:payment_id)');
-        $stmt->execute(array("placed_by" => $_SESSION['user_id'],":size" => $amount,":verify_hash" => $hash,":verified" => "0",":address" => $address,":coin" => $coin,":payment_id" => $payment_id));
+        $stmt = $db->prepare('INSERT INTO withdrawals (placed_by,size,verify_hash,verified,creation_time,address,coin,payment_id,fee) VALUES (:placed_by,:size,:verify_hash,:verified,now(),:address,:coin,:payment_id,:fee)');
+        $stmt->execute(array("placed_by" => $_SESSION['user_id'],":size" => $amount,":verify_hash" => $hash,":verified" => "0",":address" => $address,":coin" => $coin,":payment_id" => $payment_id,":fee" => getFee($coin)));
         
         return "A withdrawal confirmation email has been sent to your email address.";
         
@@ -915,7 +911,7 @@ function getWithdrawalsSum($coin){
     
     while( $row = $stmt->fetch() ){
         $total = bcadd($total,xpnd($row['size']));
-        $total = bcadd($total,getFee($coin));
+        $total = bcadd($total,xpnd($row['fee']));
     }
     
     return $total;
