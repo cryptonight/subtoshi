@@ -1,4 +1,0 @@
-AuthType basic
-AuthName "Secure"
-AuthUserFile /etc/apache2/passwords/.htpasswd
-Require valid-user
