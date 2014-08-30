@@ -346,13 +346,14 @@ function loadMarketOrders(){
   $.post( "api/api",{ method: "getMarketOrders", coin: getUrlVars()['coin'], type: "sell"}, function( data ) {
 	  var rows = "";
 	  var volume = "0";
-	  $.each(data.result, function( index, value ) {
-	    var price = xpnd(math.eval(index+"/1000"));
-	    var amount = format8(math.eval(value+"/100000000"));
+	  for(var i=0;i<data.result.length;i++){
+	    var price = xpnd(math.eval(data.result[i].price+"/1000"));
+	    var amount = format8(math.eval(data.result[i].amount+"/100000000"));
 	    var total = format8(math.eval(price+"*"+amount+"/100000000"));
-      rows += "<tr><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>";
+      var row = "<tr><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>";
+      rows = row+rows;
       volume = xpnd(math.eval(volume+"+"+amount));
-    });
+    }
     $("#sellorders").html(rows);
     $("#sellvolume").html(format8(volume));
     $("#sellvolumestats").html(format8(volume));
@@ -360,14 +361,14 @@ function loadMarketOrders(){
 	$.post( "api/api",{ method: "getMarketOrders", coin: getUrlVars()['coin'], type: "buy"}, function( data ) {
 	  var rows = "";
 	  var volume = "0";
-	  $.each(data.result, function( index, value ) {
-	    var price = xpnd(math.eval(index+"/1000"));
-	    var amount = format8(math.eval(value+"/100000000"));
+	  for(var i=0;i<data.result.length;i++){
+	    var price = xpnd(math.eval(data.result[i].price+"/1000"));
+	    var amount = format8(math.eval(data.result[i].amount+"/100000000"));
 	    var total = format8(math.eval(price+"*"+amount+"/100000000"));
       rows += "<tr><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>";
       var toadd = xpnd(math.eval(price+"*"+amount+"/100000000"));
       volume = xpnd(math.eval(volume+"+"+toadd));
-    });
+    }
     $("#buyorders").html(rows);
     $("#buyvolume").html(format8(volume));
     $("#buyvolumestats").html(format8(volume));

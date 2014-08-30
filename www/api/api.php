@@ -407,7 +407,7 @@ function getMarketOrders($coin, $type){
     $pass = '***REMOVED***';
     $db = new PDO($dns, $user, $pass);
     
-    $statement = $db->prepare("select * from orders where NOT (size = filled) AND (canceled is null OR canceled = 0) AND type = :type AND coin = :coin ORDER BY convert(price,decimal)");
+    $statement = $db->prepare("select * from orders where NOT (size = filled) AND (canceled is null OR canceled = 0) AND type = :type AND coin = :coin");
     $statement->execute(array(":type" => $type, ":coin" => $coin));
     
     $orders = array();
@@ -422,7 +422,18 @@ function getMarketOrders($coin, $type){
     	}
     }
     
-    return $orders;
+    $result = array();
+    foreach ($orders as $key => $value) {
+        array_push($result,array("price" => $key, "amount" => $value));
+    }
+    
+    usort($result, 'order_by_price');
+    
+    return $result;
+}
+
+function order_by_price($a, $b) {
+    return $b['price'] > $a['price'] ? 1 : -1;
 }
 
 function getPaymentIds($coin){
