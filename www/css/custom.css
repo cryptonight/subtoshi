@@ -72,6 +72,6 @@ html, body {
     overflow:hidden;
 }
 
-i.price, i.coin, i.amount, i.btc {
+i.price, i.coinbought, i.coinsold, i.amountbuy, i.amountsell, i.coin, i.btc {
     color:#BBB;
 }

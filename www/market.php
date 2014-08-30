@@ -36,7 +36,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="buyorder_size" class="col-sm-2 control-label amount" style="padding-right:0; text-align:left;">Amount</label>
+                  <label for="buyorder_size" class="col-sm-2 control-label amountbuy" style="padding-right:0; text-align:left;">Amount</label>
                   <div class="col-sm-10">
                   <div class="input-group" style="padding-right:5px; padding-left:5px; width:100%;">
                     <input type="text" class="form-control" id="buyorder_size" placeholder="Amount" onkeyup="calcbuytotal();">
@@ -90,7 +90,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="sellorder_size" class="col-sm-2 control-label amount" style="padding-right:0; text-align:left;">Amount</label>
+                  <label for="sellorder_size" class="col-sm-2 control-label amountsell" style="padding-right:0; text-align:left;">Amount</label>
                   <div class="col-sm-10">
                   <div class="input-group" style="padding-right:5px; padding-left:5px; width:100%;">
                     <input type="text" class="form-control" id="sellorder_size" placeholder="Amount" onkeyup="calcselltotal();">
@@ -139,7 +139,7 @@
           
             <table class="table table-condensed">
             <thead>
-            <tr><th>Price <i class="fa fa-question-circle fa-fw price"></i></th><th><?php echo strtoupper($_GET['coin']); ?> <i class="fa fa-question-circle fa-fw coin"></i></th><th>BTC <i class="fa fa-question-circle fa-fw btc"></i></th></tr>
+            <tr><th>Price <i class="fa fa-question-circle fa-fw price"></i></th><th><?php echo strtoupper($_GET['coin']); ?> <i class="fa fa-question-circle fa-fw coinbought"></i></th><th>BTC <i class="fa fa-question-circle fa-fw btc"></i></th></tr>
             </thead>
             <tbody id="buyorders">
             </tbody>
@@ -157,7 +157,7 @@
           
             <table class="table table-condensed">
             <thead>
-            <tr><th>Price <i class="fa fa-question-circle fa-fw price"></i></th><th><?php echo strtoupper($_GET['coin']); ?> <i class="fa fa-question-circle fa-fw coin"></i></th><th>BTC <i class="fa fa-question-circle fa-fw btc"></i></th></tr>
+            <tr><th>Price <i class="fa fa-question-circle fa-fw price"></i></th><th><?php echo strtoupper($_GET['coin']); ?> <i class="fa fa-question-circle fa-fw coinsold"></i></th><th>BTC <i class="fa fa-question-circle fa-fw btc"></i></th></tr>
             </thead>
             <tbody id="sellorders">
             </tbody>
@@ -177,7 +177,7 @@
           <div class="panel-body" style="max-height:300px; overflow:auto; padding:10px;">
             <table class="table table-condensed">
             <thead>
-            <tr><th>Date (UTC)</th><th><span class="price">Price</span></th><th><span class="coin"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th><th>Filled (<?php echo strtoupper($_GET['coin']); ?>)</th><th>Filled (BTC)</th><th> </th></tr>
+            <tr><th>Date (UTC)</th><th><span class="price">Price</span></th><th><span class="coinsold"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th><th>Filled (<?php echo strtoupper($_GET['coin']); ?>)</th><th>Filled (BTC)</th><th> </th></tr>
             </thead>
             <tbody id="active_sell_orders">
             </tbody>
@@ -197,7 +197,7 @@
           <div class="panel-body" style="max-height:300px; overflow:auto; padding:10px;">
             <table class="table table-condensed">
             <thead>
-            <tr><th>Date (UTC)</th><th><span class="price">Price</span></th><th><span class="coin"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th><th>Filled (<?php echo strtoupper($_GET['coin']); ?>)</th><th>Filled (BTC)</th><th> </th></tr>
+            <tr><th>Date (UTC)</th><th><span class="price">Price</span></th><th><span class="coinbought"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th><th>Filled (<?php echo strtoupper($_GET['coin']); ?>)</th><th>Filled (BTC)</th><th> </th></tr>
             </thead>
             <tbody id="active_buy_orders">
             </tbody>
@@ -451,11 +451,20 @@ function addTooltips(){
   $( ".price" ).each(function( index ) {
     addTooltip(this,"The price per coin in satoshi");
   });
-  $( ".amount" ).each(function( index ) {
-    addTooltip(this,"The amount you want to buy/sell");
+  $( ".amountbuy" ).each(function( index ) {
+    addTooltip(this,"The amount you want to buy");
+  });
+  $( ".amountsell" ).each(function( index ) {
+    addTooltip(this,"The amount you want to sell");
+  });
+  $( ".coinbought" ).each(function( index ) {
+    addTooltip(this,"The amount of <?php echo getname($_GET['coin']); ?> being bought");
+  });
+  $( ".coinsold" ).each(function( index ) {
+    addTooltip(this,"The amount of <?php echo getname($_GET['coin']); ?> being sold");
   });
   $( ".coin" ).each(function( index ) {
-    addTooltip(this,"The amount of <?php echo getname($_GET['coin']); ?> being bought/sold");
+    addTooltip(this,"The amount of <?php echo getname($_GET['coin']); ?> exchanged");
   });
   $( ".btc" ).each(function( index ) {
     addTooltip(this,"The total in BTC");
