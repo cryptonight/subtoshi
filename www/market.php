@@ -348,7 +348,7 @@ function loadMarketOrders(){
 	  var volume = "0";
 	  $.each(data.result, function( index, value ) {
 	    var price = xpnd(math.eval(index+"/1000"));
-	    var amount = xpnd(math.eval(value+"/100000000"));
+	    var amount = format8(math.eval(value+"/100000000"));
 	    var total = format8(math.eval(price+"*"+amount+"/100000000"));
       rows += "<tr><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>";
       volume = xpnd(math.eval(volume+"+"+amount));
@@ -362,7 +362,7 @@ function loadMarketOrders(){
 	  var volume = "0";
 	  $.each(data.result, function( index, value ) {
 	    var price = xpnd(math.eval(index+"/1000"));
-	    var amount = xpnd(math.eval(value+"/100000000"));
+	    var amount = format8(math.eval(value+"/100000000"));
 	    var total = format8(math.eval(price+"*"+amount+"/100000000"));
       rows += "<tr><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>";
       var toadd = xpnd(math.eval(price+"*"+amount+"/100000000"));
@@ -380,10 +380,10 @@ function loadActiveOrders(){
 	  for(var i=0;i<data.result.length;i++){
 	    if(data.result[i]['amount'] != data.result[i]['filled'] && data.result[i].canceled != 1){
   	    var price = xpnd(math.eval(data.result[i]['price']+"/1000"));
-  	    var amount = xpnd(math.eval(data.result[i]['amount']+"/100000000"));
-  	    var filled = xpnd(math.eval(data.result[i]['filled']+"/100000000"));
-  	    var total = xpnd(math.round(math.eval(price+"*"+amount+"/100000000"),8));
-  	    var totalfilled = xpnd(math.round(math.eval(price+"*"+filled+"/100000000"),8));
+  	    var amount = format8(math.eval(data.result[i]['amount']+"/100000000"));
+  	    var filled = format8(math.eval(data.result[i]['filled']+"/100000000"));
+  	    var total = format8(math.round(math.eval(price+"*"+amount+"/100000000"),8));
+  	    var totalfilled = format8(math.round(math.eval(price+"*"+filled+"/100000000"),8));
   	    var theFunction = 'cancelOrder("'+data.result[i].id+'");return false;';
         var action = "<input type='button' value='cancel' class='btn btn-xs btn-danger' onclick='"+theFunction+"'>";
   	    rows += "<tr><td>"+data.result[i]['creation_time']+"</td><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td><td>"+filled+"</td><td>"+totalfilled+"</td><td>"+action+"</td></tr>"
@@ -397,10 +397,10 @@ function loadActiveOrders(){
 	  for(var i=0;i<data.result.length;i++){
 	    if(data.result[i]['amount'] != data.result[i]['filled'] && data.result[i].canceled != 1){
   	    var price = xpnd(math.eval(data.result[i]['price']+"/1000"));
-  	    var amount = xpnd(math.eval(data.result[i]['amount']+"/100000000"));
-  	    var filled = xpnd(math.eval(data.result[i]['filled']+"/100000000"));
-  	    var total = xpnd(math.round(math.eval(price+"*"+amount+"/100000000"),8));
-  	    var totalfilled = xpnd(math.round(math.eval(price+"*"+filled+"/100000000"),8));
+  	    var amount = format8(math.eval(data.result[i]['amount']+"/100000000"));
+  	    var filled = format8(math.eval(data.result[i]['filled']+"/100000000"));
+  	    var total = format8(math.round(math.eval(price+"*"+amount+"/100000000"),8));
+  	    var totalfilled = format8(math.round(math.eval(price+"*"+filled+"/100000000"),8));
   	    var theFunction = 'cancelOrder("'+data.result[i].id+'");return false;';
         var action = "<input type='button' value='cancel' class='btn btn-xs btn-danger' onclick='"+theFunction+"'>";
   	    rows += "<tr><td>"+data.result[i]['creation_time']+"</td><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td><td>"+filled+"</td><td>"+totalfilled+"</td><td>"+action+"</td></tr>"
@@ -417,7 +417,7 @@ function loadMarketHistory(){
 	  for(var i=0;i<data.result.length;i++){
 	    var date = data.result[i]["creation_time"];
 	    var price = xpnd(math.eval(data.result[i]["price"]+"/1000"));
-	    var amount = xpnd(math.eval(data.result[i]["amount"]+"/100000000"));
+	    var amount = format8(math.eval(data.result[i]["amount"]+"/100000000"));
 	    var total = format8(math.eval(price+"*"+amount+"/100000000"));
 	    rows += "<tr><td>"+date+"</td><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>";
 	  }
