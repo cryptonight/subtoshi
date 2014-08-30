@@ -4,11 +4,11 @@
 <div class="box box-main">
 
 <div class="page-header">
-  <h3>BTC/<?php echo strtoupper($_GET['coin']); ?> - <?php echo getname($_GET['coin']); ?> <small>Last trade: <span id="lasttrade"></span></small></h3>
+  <h3>BTC/<?php echo strtoupper($_GET['coin']); ?> - <?php echo getname($_GET['coin']); ?> <small>Last: <span id="last"></span> - High: <span id="high"></span> - Low: <span id="low"></span></small></h3>
 </div>
 
 <div class="row">
-<div class="col-md-9">
+<div class="col-md-12">
 <div class="row">
 <div class="col-md-12" id="alerts">
   <?php if(!isset($_SESSION['user_id'])){ ?>
@@ -31,7 +31,7 @@
                   <div class="col-sm-10">
                     <div class="input-group" style="padding-right:5px; padding-left:5px; width:100%;">
                     <input type="text" class="form-control" id="buyorder_price" placeholder="Price" onkeyup="calcbuytotal();">
-                    <span class="input-group-addon" style="width:4em;">Sat</span>
+                    <span class="input-group-addon" style="width:5em;">satoshi</span>
                     </div>
                   </div>
                 </div>
@@ -40,7 +40,7 @@
                   <div class="col-sm-10">
                   <div class="input-group" style="padding-right:5px; padding-left:5px; width:100%;">
                     <input type="text" class="form-control" id="buyorder_size" placeholder="Amount" onkeyup="calcbuytotal();">
-                    <span class="input-group-addon" style="width:4em;"><?php echo strtoupper($_GET['coin']); ?></span>
+                    <span class="input-group-addon" style="width:5em;"><?php echo strtoupper($_GET['coin']); ?></span>
                   </div>
                   </div>
                 </div>
@@ -54,7 +54,7 @@
                   <div class="col-sm-10">
                   <div class="input-group" style="padding-right:5px; padding-left:5px; width:100%;">
                     <input type="text" class="form-control" id="buyorder_total" placeholder="Amount" onkeyup="calcbuyamount();">
-                    <span class="input-group-addon" style="width:4em;">BTC</span>
+                    <span class="input-group-addon" style="width:5em;">BTC</span>
                   </div>
                   </div>
                 </div>
@@ -85,7 +85,7 @@
                   <div class="col-sm-10">
                     <div class="input-group" style="padding-right:5px; padding-left:5px; width:100%;">
                     <input type="text" class="form-control" id="sellorder_price" placeholder="Price" onkeyup="calcselltotal();">
-                    <span class="input-group-addon" style="width:4em;">Sat</span>
+                    <span class="input-group-addon" style="width:5em;">satoshi</span>
                     </div>
                   </div>
                 </div>
@@ -94,7 +94,7 @@
                   <div class="col-sm-10">
                   <div class="input-group" style="padding-right:5px; padding-left:5px; width:100%;">
                     <input type="text" class="form-control" id="sellorder_size" placeholder="Amount" onkeyup="calcselltotal();">
-                    <span class="input-group-addon" style="width:4em;"><?php echo strtoupper($_GET['coin']); ?></span>
+                    <span class="input-group-addon" style="width:5em;"><?php echo strtoupper($_GET['coin']); ?></span>
                   </div>
                   </div>
                 </div>
@@ -108,7 +108,7 @@
                   <div class="col-sm-10">
                   <div class="input-group" style="padding-right:5px; padding-left:5px; width:100%;">
                     <input type="text" class="form-control" id="sellorder_total" placeholder="Amount" onkeyup="calcsellamount();">
-                    <span class="input-group-addon" style="width:4em;">BTC</span>
+                    <span class="input-group-addon" style="width:5em;">BTC</span>
                   </div>
                   </div>
                 </div>
@@ -139,7 +139,7 @@
           
             <table class="table table-condensed">
             <thead>
-            <tr><th>Price <i class="fa fa-question-circle fa-fw help price"></i></th><th><?php echo strtoupper($_GET['coin']); ?> <i class="fa fa-question-circle fa-fw help coinb"></i></th><th>BTC <i class="fa fa-question-circle fa-fw help btc"></i></th></tr>
+            <tr><th>Price (satoshi) <i class="fa fa-question-circle fa-fw help price"></i></th><th><?php echo strtoupper($_GET['coin']); ?> <i class="fa fa-question-circle fa-fw help coinb"></i></th><th>BTC <i class="fa fa-question-circle fa-fw help btc"></i></th></tr>
             </thead>
             <tbody id="buyorders">
             </tbody>
@@ -157,7 +157,7 @@
           
             <table class="table table-condensed">
             <thead>
-            <tr><th>Price <i class="fa fa-question-circle fa-fw help price"></i></th><th><?php echo strtoupper($_GET['coin']); ?> <i class="fa fa-question-circle fa-fw help coins"></i></th><th>BTC <i class="fa fa-question-circle fa-fw help btc"></i></th></tr>
+            <tr><th>Price (satoshi) <i class="fa fa-question-circle fa-fw help price"></i></th><th><?php echo strtoupper($_GET['coin']); ?> <i class="fa fa-question-circle fa-fw help coins"></i></th><th>BTC <i class="fa fa-question-circle fa-fw help btc"></i></th></tr>
             </thead>
             <tbody id="sellorders">
             </tbody>
@@ -177,7 +177,7 @@
           <div class="panel-body" style="max-height:300px; overflow:auto; padding:10px;">
             <table class="table table-condensed">
             <thead>
-            <tr><th>Date (UTC)</th><th><span class="price">Price</span></th><th><span class="coins"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th><th>Filled (<?php echo strtoupper($_GET['coin']); ?>)</th><th>Filled (BTC)</th><th> </th></tr>
+            <tr><th>Date (UTC)</th><th><span class="price">Price (satoshi)</span></th><th><span class="coins"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th><th>Filled (<?php echo strtoupper($_GET['coin']); ?>)</th><th>Filled (BTC)</th><th> </th></tr>
             </thead>
             <tbody id="active_sell_orders">
             </tbody>
@@ -197,7 +197,7 @@
           <div class="panel-body" style="max-height:300px; overflow:auto; padding:10px;">
             <table class="table table-condensed">
             <thead>
-            <tr><th>Date (UTC)</th><th><span class="price">Price</span></th><th><span class="coinb"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th><th>Filled (<?php echo strtoupper($_GET['coin']); ?>)</th><th>Filled (BTC)</th><th> </th></tr>
+            <tr><th>Date (UTC)</th><th><span class="price">Price (satoshi)</span></th><th><span class="coinb"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th><th>Filled (<?php echo strtoupper($_GET['coin']); ?>)</th><th>Filled (BTC)</th><th> </th></tr>
             </thead>
             <tbody id="active_buy_orders">
             </tbody>
@@ -217,7 +217,7 @@
           <div class="panel-body" style="max-height:300px; overflow:auto; padding:10px;">
             <table class="table table-condensed">
             <thead>
-            <tr><th>Date (UTC)</th><th><span class="price">Price</span></th><th><span class="coin"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th></tr>
+            <tr><th>Date (UTC)</th><th><span class="price">Price (satoshi)</span></th><th><span class="coin"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th></tr>
             </thead>
             <tbody id="markethistory">
             </tbody>
@@ -228,41 +228,6 @@
     </div>
     </div>
     
-</div>
-<div class="col-md-3" style="border-left:1px solid #DDD;">
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Market Stats</h3>
-  </div>
-  <div class="panel-body">
-    <div class="row">
-    <div class="col-md-6">
-    <b>Open: <span id="<?php echo $_GET['coin']; ?>-open"></span></b>
-    </div>
-    <div class="col-md-6">
-    <b>High: <span id="<?php echo $_GET['coin']; ?>-high"></span></b>
-    </div>
-    </div>
-    <div class="row">
-    <div class="col-md-6">
-    <b>Low: <span id="<?php echo $_GET['coin']; ?>-low"></span></b>
-    </div>
-    <div class="col-md-6">
-    <b>Last: <span id="<?php echo $_GET['coin']; ?>-last"></span></b>
-    </div>
-    </div>
-  </div>
-  <ul class="list-group">
-    <li class="list-group-item">
-    <p><b>Total sells (<?php echo strtoupper($_GET['coin']); ?>): <span id="sellvolumestats"></span></b>
-    <p><b>Total buys (BTC): <span id="buyvolumestats"></span></b></p>
-    </li>
-    <li class="list-group-item">
-    <p><b><?php echo getname($_GET['coin']); ?>'s <a href="<?php echo gettalk($_GET['coin']); ?>" target="_newtab"><i class="fa fa-external-link"></i> Bitcointalk</a></b></p>
-    </li>
-    </ul>
-</div>
-
 </div>
 </div>
 
@@ -316,17 +281,15 @@ function loadBalances(){
 function loadMarketStats(){
   $.post( "api/api", { method: "getDailyStats", coin: getUrlVars()['coin'] }, function( data ) {
       if(!data.result.open){
-          $("#"+data.ticker+"-open").html("N/A");
-          $("#"+data.ticker+"-high").html("N/A");
-          $("#"+data.ticker+"-low").html("N/A");
-          $("#"+data.ticker+"-last").html("N/A");
-          $("#lasttrade").html("N/A");
+          $("#open").html("N/A");
+          $("#high").html("N/A");
+          $("#low").html("N/A");
+          $("#last").html("N/A");
       }else{
-          $("#"+data.ticker+"-open").html(xpnd(math.eval(data.result.open+"/1000")));
-          $("#"+data.ticker+"-high").html(xpnd(math.eval(data.result.high+"/1000")));
-          $("#"+data.ticker+"-low").html(xpnd(math.eval(data.result.low+"/1000")));
-          $("#"+data.ticker+"-last").html(xpnd(math.eval(data.result.last+"/1000")));
-          $("#lasttrade").html(xpnd(math.eval(data.result.last+"/1000")) + " Satoshi");
+          $("#open").html(xpnd(math.eval(data.result.open+"/1000")));
+          $("#high").html(xpnd(math.eval(data.result.high+"/1000")));
+          $("#low").html(xpnd(math.eval(data.result.low+"/1000")));
+          $("#last").html(xpnd(math.eval(data.result.last+"/1000")));
       }
   }, "json");
 }
