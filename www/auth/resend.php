@@ -19,8 +19,8 @@ if ($login->isUserLoggedIn() == true) {
     <div style="max-width:500px; margin-left:auto; margin-right:auto;">
     <div class="panel panel-default" >
         <div class="panel-heading">
-            <div class="panel-title">Sign In</div>
-            <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="/auth/password_reset">Forgot password?</a></div>
+            <div class="panel-title">Resend Account Activation Email</div>
+            <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="/auth/login">Sign In</a></div>
         </div>     
 
         <div style="padding-top:30px" class="panel-body" >
@@ -78,29 +78,30 @@ if ($login->isUserLoggedIn() == true) {
         }
         ?>
             
-            <form class="form-horizontal" role="form" method="post" action="login" name="loginform">
+            <form class="form-horizontal" role="form" method="post" action="resend" name="resendform">
                 <div style="margin-bottom: 25px" class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input id="user_name" type="text" class="form-control" name="user_name" value="" placeholder="username or email" required>                                        
-                </div>
-            
-                <div style="margin-bottom: 10px" class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    <input id="user_password" type="password" name="user_password" class="form-control" placeholder="password" autocomplete="off" required >
+                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                    <input id="user_email" type="text" class="form-control" name="user_email" value="" placeholder="Email" required>                                        
                 </div>
                 
-                <div class="input-group">
-                    <div class="checkbox">
-                        <label>
-                            <input id="user_rememberme" name="user_rememberme" type="checkbox"> Remember me (for 2 weeks)
-                        </label>
-                    </div>
-                </div>
-
+                <ul class="list-group">
+                    <li class="list-group-item" style="padding:10px;">
+                
+                        <div class="form-group" style="margin-bottom:0;">
+                            <div class="col-md-12" style="">
+                                <img src="tools/showCaptcha" alt="captcha" />
+                            </div>
+                            <div class="col-md-12">
+                                <input style="margin-top:10px;" type="text" id="captcha" name="captcha" class="form-control" placeholder="Please enter the above characters" required />
+                            </div>
+                        </div>
+                        
+                    </li>
+                </ul>
 
                 <div style="margin-top:15px" class="form-group">
                     <div class="col-sm-12 controls">
-                        <input type="submit" name="login" class="btn btn-success" value="Login"/>
+                        <input type="submit" name="resend" class="btn btn-success" value="Resend"/>
                     </div>
                 </div>
 
@@ -108,7 +109,6 @@ if ($login->isUserLoggedIn() == true) {
                     <div class="col-md-12 control">
                         <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
                             Don't have an account! <a href="/auth/register">Sign Up Here</a>
-                            <span style="float:right;"><a href="/auth/resend">Resend activation email</a></span>
                         </div>
                     </div>
                 </div>    

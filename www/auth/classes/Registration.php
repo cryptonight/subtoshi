@@ -44,6 +44,8 @@ class Registration
         // if we have such a GET request, call the verifyNewUser() method
         } else if (isset($_GET["id"]) && isset($_GET["verification_code"])) {
             $this->verifyNewUser($_GET["id"], $_GET["verification_code"]);
+        }else if (isset($_POST["resend"])){
+            $this->resendVerificationEmail($_POST['user_email'],$_POST["captcha"]);
         }
     }
 
@@ -206,7 +208,7 @@ class Registration
         $link = EMAIL_VERIFICATION_URL.'?id='.urlencode($user_id).'&verification_code='.urlencode($user_activation_hash);
 
         // the link to your register.php, please set this value in config/email_verification.php
-        $mail->Body = EMAIL_VERIFICATION_CONTENT.' <p><a href="'.$link.'">Click here to verify your email</a></p>';
+        $mail->Body = EMAIL_VERIFICATION_CONTENT.' <p><a href="'.$link.'">Click here to verify your email</a></p><p>If your email program does not allow you to click the above link, please copy and paste the following into your web browser</p><p><a href="'.$link.'">'.$link.'</a></p>';
         
         $mail->IsHTML(true);
         
@@ -236,6 +238,45 @@ class Registration
                 $this->messages[] = MESSAGE_REGISTRATION_ACTIVATION_SUCCESSFUL;
             } else {
                 $this->errors[] = MESSAGE_REGISTRATION_ACTIVATION_NOT_SUCCESSFUL;
+            }
+        }
+    }
+    
+    public function resendVerificationEmail($user_email, $captcha){
+        
+        $user_email  = trim($user_email);
+        
+        if (strtolower($captcha) != strtolower($_SESSION['captcha'])) {
+            $this->errors[] = MESSAGE_CAPTCHA_WRONG;
+        } elseif (empty($user_email)) {
+            $this->errors[] = MESSAGE_EMAIL_EMPTY;
+        } elseif (strlen($user_email) > 64) {
+            $this->errors[] = MESSAGE_EMAIL_TOO_LONG;
+        } elseif (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
+            $this->errors[] = MESSAGE_EMAIL_INVALID;
+        }elseif ($this->databaseConnection()) {
+            
+            $query_check_user_email = $this->db_connection->prepare('SELECT user_id, user_active, user_activation_hash FROM users WHERE user_email=:user_email');
+            $query_check_user_email->bindValue(':user_email', $user_email, PDO::PARAM_STR);
+            $query_check_user_email->execute();
+            $result = $query_check_user_email->fetch(PDO::FETCH_ASSOC);
+            
+            if($query_check_user_email->rowCount() === 1){
+                $user_id = $result["user_id"];
+                $user_active = $result["user_active"];
+                $user_activation_hash = $result["user_activation_hash"];
+                
+                if($user_active === "0"){
+                    if($this->sendVerificationEmail($user_id,$user_email,$user_activation_hash)){
+                        $this->messages[] = "The account activation email has been resent";
+                    }else{
+                        $this->errors[] = "An error occured while resending the account activation email";
+                    }
+                }else{
+                    $this->messages[] = "You account has already been activated";
+                }
+            }else{
+                $this->errors[] = "An error occured while resending the account activation email.";
             }
         }
     }

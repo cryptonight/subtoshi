@@ -641,7 +641,7 @@ class Login
         $mail->Subject = EMAIL_PASSWORDRESET_SUBJECT;
 
         $link    = EMAIL_PASSWORDRESET_URL.'?user_name='.urlencode($user_name).'&verification_code='.urlencode($user_password_reset_hash);
-        $mail->Body = EMAIL_PASSWORDRESET_CONTENT . ' <p><a href="' . $link . '">Click here to reset your password</a></p>';
+        $mail->Body = EMAIL_PASSWORDRESET_CONTENT . ' <p><a href="' . $link . '">Click here to reset your password</a></p><p>If your email program does not allow you to click the above link, please copy and paste the following into your web browser</p><p><a href="' . $link . '">'.$link.'</a></p>';
         
         $mail->IsHTML(true);
         
