@@ -30,18 +30,18 @@
   <div class="panel-heading">
     <h3 class="panel-title">Today's Market Stats</span></h3>
   </div>
-  <div class="panel-body" style="height:330px;">
+  <div class="panel-body" style="height:330px; overflow:auto;">
     <b>Open: </b><span id="stats-open"></span> satoshi<br/>
     <p><b>High: </b><span id="stats-high"></span> satoshi<br/>
     <b>Low: </b><span id="stats-low"></span> satoshi<br/>
     <b>Last: </b><span id="stats-last"></span> satoshi<br/>
-    <hr/>
+    <hr style="margin-top:5px; margin-bottom:6px;"/>
     <b>Highest Bid: </b><span id="stats-bid"></span> satoshi<br/>
     <b>Lowest Ask: </b><span id="stats-ask"></span> satoshi<br/>
-    <hr/>
-    <b>Total Sells: </b><span id="stats-sells"></span> <br/>
-    <p><b>Total Buys: </b><span id="stats-buys"></span> BTC</p>
-    <p><b>24hr Volume: </b><span id="stats-volume"></span> BTC</p>
+    <hr style="margin-top:5px; margin-bottom:6px;"/>
+    <p><b>Total Sells: </b><br/><span id="stats-sells"></span> <?php echo strtoupper($_GET['coin']); ?></p>
+    <p><b>Total Buys: </b><br/><span id="stats-buys"></span> BTC</p>
+    <p><b>24hr Volume: </b><br/><span id="stats-volume"></span> BTC</p>
   </div>
 </div>
 </div>
