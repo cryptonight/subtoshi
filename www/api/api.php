@@ -56,6 +56,9 @@ $price = $_POST['price'];
 if(isset($_POST['size'])){
 $size = $_POST['size'];
 }
+
+$api_key = urlencode("***REMOVED***");
+
 switch ($method) {
     case "generatePaymentId":
         $result = generatePaymentId($coin);
@@ -196,11 +199,13 @@ function getDeposits($coin){
     $payment_ids = getPaymentIds($coin);
     $deposits = array();
     
+    global $api_key;
+    
     if($coin === "btc"){
         
         $payment_ids = getBitcoinAddresses();
         
-        $url = "https://blockchain.info/latestblock";
+        $url = "https://blockchain.info/latestblock?api_code=".$api_key;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10); 
@@ -211,7 +216,7 @@ function getDeposits($coin){
         logBlockHeight($blockheight,$coin);
         
         for($i=0;$i<count($payment_ids);$i++){
-            $url = "https://blockchain.info/address/".$payment_ids[$i]."?format=json";
+            $url = "https://blockchain.info/address/".$payment_ids[$i]."?format=json&api_code=".$api_key;
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -219,7 +224,7 @@ function getDeposits($coin){
             curl_close($ch);
             $data = json_decode($data,true)["txs"];
             for($j=0;$j<count($data);$j++){
-                $tx_result = file_get_contents("https://blockchain.info/q/txresult/".$data[$j]["hash"]."/".$payment_ids[$i]);
+                $tx_result = file_get_contents("https://blockchain.info/q/txresult/".$data[$j]["hash"]."/".$payment_ids[$i]."?api_code=".$api_key);
                 error_log("TX RESULT: " . $tx_result);
                 if(bccomp($tx_result,"0") > 0){
                     if(!isset($data[$j]['block_height'])){
