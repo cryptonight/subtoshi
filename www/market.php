@@ -298,12 +298,21 @@ function loadData(){
 }
 
 function updateData(){
-  marketDataLoaded = false;
+  resetVariables();
   loadActiveOrders();
 	loadMarketOrders();
 	loadMarketHistory();
 	loadMarketStats();
 	loadBalances();
+}
+
+function resetVariables(){
+  active_sells = [];
+  active_buys = [];
+  balance_coin = "0";
+  balance_btc = "0";
+  markethistory = [];
+  marketDataLoaded = false;
 }
 
 
