@@ -6,6 +6,7 @@
         <div class="footer">
                 <div style="text-align:center; color:#EEE">
                         <a href="/contact" style="color:#EEE; text-decoration:underline;">Contact Us</a> | <a href="/contact" style="color:#EEE; text-decoration:underline;">Support</a> | <a href="/terms" style="color:#EEE; text-decoration:underline;">Terms and Conditions</a>
+                        <div style="padding-top:5px;">Server time: <?php echo date("Y-m-d H:i"); ?></div>
                 </div>
         </div>
         
