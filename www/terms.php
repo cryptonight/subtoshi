@@ -9,11 +9,11 @@
         </h3>
 
         <p>
-            By accessing this web site, you are agreeing to be bound by these
-            web site Terms and Conditions of Use, all applicable laws and regulations,
+            By accessing this website, you are agreeing to be bound by these
+            website Terms and Conditions of Use, all applicable laws and regulations,
             and agree that you are responsible for compliance with any applicable local, state, and federal
             laws. If you do not agree with any of these terms, you are prohibited from
-            using or accessing this site. The materials contained in this web site are
+            using or accessing this site. The materials contained in this website are
             protected by applicable copyright and trademark law.
         </p>
     
@@ -47,7 +47,7 @@
                 <ol type="i">
                     <li>modify or copy the materials;</li>
                     <li>use the materials for any commercial purpose, or for any public display (commercial or non-commercial);</li>
-                    <li>attempt to decompile or reverse engineer any software contained on Subtoshi.com's web site;</li>
+                    <li>attempt to decompile or reverse engineer any software contained on Subtoshi.com's website;</li>
                     <li>remove any copyright or other proprietary notations from the materials; or</li>
                     <li>transfer the materials to another person or "mirror" the materials on any other server.</li>
                 </ol>
@@ -64,7 +64,7 @@
             5. Disclaimer
         </h3>
         <p>
-            The materials on Subtoshi.com's web site are provided "as is". Subtoshi.com makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties, including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights. Further, Subtoshi.com does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its Internet web site or otherwise relating to such materials or on any sites linked to this site.
+            The materials on Subtoshi.com's website are provided "as is". Subtoshi.com makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties, including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights. Further, Subtoshi.com does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its Internet website or otherwise relating to such materials or on any sites linked to this site.
         </p>
         <h3>
             6. Limitations
@@ -79,7 +79,7 @@
         </h3>
 
         <p>
-            The materials appearing on Subtoshi.com's web site could include technical, typographical, or photographic errors. Subtoshi.com does not warrant that any of the materials on its web site are accurate, complete, or current. Subtoshi.com may make changes to the materials contained on its web site at any time without notice. Subtoshi.com does not, however, make any commitment to update the materials.
+            The materials appearing on Subtoshi.com's website could include technical, typographical, or photographic errors. Subtoshi.com does not warrant that any of the materials on its website are accurate, complete, or current. Subtoshi.com may make changes to the materials contained on its website at any time without notice. Subtoshi.com does not, however, make any commitment to update the materials.
         </p>
 
         <h3>
@@ -87,7 +87,7 @@
         </h3>
 
         <p>
-            Subtoshi.com has not reviewed all of the sites linked to its Internet web site and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by Subtoshi.com of the site. Use of any such linked web site is at the user's own risk.
+            Subtoshi.com has not reviewed all of the sites linked to its Internet website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by Subtoshi.com of the site. Use of any such linked website is at the user's own risk.
         </p>
 
         <h3>
@@ -95,7 +95,7 @@
         </h3>
 
         <p>
-            Subtoshi.com may revise these terms of use for its web site at any time without notice. By using this web site you are agreeing to be bound by the then current version of these Terms and Conditions of Use.
+            Subtoshi.com may revise these terms of use for its website at any time without notice. By using this website you are agreeing to be bound by the then current version of these Terms and Conditions of Use.
         </p>
 
         <h3>
@@ -103,7 +103,7 @@
         </h3>
 
         <p>
-            Any claim relating to Subtoshi.com's web site shall be governed by the laws of the State of Washington without regard to its conflict of law provisions.
+            Any claim relating to Subtoshi.com's website shall be governed by the laws of the State of Washington without regard to its conflict of law provisions.
         </p>
 
         <h3>
@@ -111,7 +111,7 @@
         </h3>
 
         <p>
-            Currencies are listed at the discretion of Subtoshi.com and can be removed at any time.  If a currency is removed, you will have 14 days to withdrawal your funds if the blockchain allows for it.  In no event shall we be liable for any loss, liability or cost whatsoever arising from any authorized or unauthorized transaction.
+            Currencies are listed at the discretion of Subtoshi.com and can be removed at any time.  If a currency is removed, you will have 14 days to withdraw your funds if the blockchain allows for it.  In no event shall we be liable for any loss, liability or cost whatsoever arising from any authorized or unauthorized transaction.
         </p>
         <h3>
             12. Markets
