@@ -8,6 +8,46 @@
 </div>
 
 <div class="row">
+<div class="col-md-9">
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Charts</span></h3>
+  </div>
+  <div class="panel-body">
+    <!-- <div style="padding-bottom:5px;" class="amChartsDataSetSelector">
+      Interval: 
+      <input type="button" class="amChartsButton" value="day" onclick="group('DD');">
+      <input type="button" class="amChartsButton" value="week" onclick="group('WW');">
+      <input type="button" class="amChartsButton" value="month" onclick="group('MM');">
+    </div> -->
+    <div id="chartdiv" style="width:100%;height:300px;"></div>
+  </div>
+</div>
+</div>
+
+<div class="col-md-3" style="padding-left:0;">
+  <div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Today's Market Stats</span></h3>
+  </div>
+  <div class="panel-body" style="height:330px;">
+    <b>Open: </b><span id="stats-open"></span> satoshi<br/>
+    <p><b>High: </b><span id="stats-high"></span> satoshi<br/>
+    <b>Low: </b><span id="stats-low"></span> satoshi<br/>
+    <b>Last: </b><span id="stats-last"></span> satoshi<br/>
+    <hr/>
+    <b>Highest Bid: </b><span id="stats-bid"></span> satoshi<br/>
+    <b>Lowest Ask: </b><span id="stats-ask"></span> satoshi<br/>
+    <hr/>
+    <b>Total Sells: </b><span id="stats-sells"></span> <br/>
+    <p><b>Total Buys: </b><span id="stats-buys"></span> BTC</p>
+    <p><b>24hr Volume: </b><span id="stats-volume"></span> BTC</p>
+  </div>
+</div>
+</div>
+
+</div>
+<div class="row">
 <div class="col-md-12">
 <div class="row">
 <div class="col-md-12" id="alerts">
@@ -249,12 +289,16 @@ var active_buys = [];
 var balance_coin = "0";
 var balance_btc = "0";
 
+var markethistory = [];
+var marketDataLoaded = false;
+
 function loadData(){
   updateData();
-	setTimeout(loadData, 30000);
+	setTimeout(loadData, 45000);
 }
 
 function updateData(){
+  marketDataLoaded = false;
   loadActiveOrders();
 	loadMarketOrders();
 	loadMarketHistory();
@@ -285,11 +329,22 @@ function loadMarketStats(){
           $("#high").html("N/A");
           $("#low").html("N/A");
           $("#last").html("N/A");
+          
+          $("#stats-open").html("N/A");
+          $("#stats-high").html("N/A");
+          $("#stats-low").html("N/A");
+          $("#stats-last").html("N/A");
+          
       }else{
           $("#open").html(xpnd(math.eval(data.result.open+"/1000")));
           $("#high").html(xpnd(math.eval(data.result.high+"/1000")));
           $("#low").html(xpnd(math.eval(data.result.low+"/1000")));
           $("#last").html(xpnd(math.eval(data.result.last+"/1000")));
+          
+          $("#stats-open").html(xpnd(math.eval(data.result.open+"/1000")));
+          $("#stats-high").html(xpnd(math.eval(data.result.high+"/1000")));
+          $("#stats-low").html(xpnd(math.eval(data.result.low+"/1000")));
+          $("#stats-last").html(xpnd(math.eval(data.result.last+"/1000")));
       }
   }, "json");
 }
@@ -308,34 +363,66 @@ function disableForms(){
 function loadMarketOrders(){
   $.post( "api/api",{ method: "getMarketOrders", coin: getUrlVars()['coin'], type: "sell"}, function( data ) {
 	  var rows = "";
-	  var volume = "0";
+	  var ordertotal = "0";
 	  for(var i=0;i<data.result.length;i++){
 	    var price = xpnd(math.eval(data.result[i].price+"/1000"));
 	    var amount = format8(math.eval(data.result[i].amount+"/100000000"));
 	    var total = format8(math.eval(price+"*"+amount+"/100000000"));
-      var row = "<tr><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>";
+      var thefunction = 'fillForm("'+price+'","'+amount+'","buy")';
+      var row = "<tr onclick='"+thefunction+"' class='order_tr'><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>";
       rows = row+rows;
-      volume = xpnd(math.eval(volume+"+"+amount));
+      ordertotal = xpnd(math.eval(ordertotal+"+"+amount));
+      
+      if(i == data.result.length-1){
+        $("#stats-ask").html(price);
+      }
+      
     }
     $("#sellorders").html(rows);
-    $("#sellvolume").html(format8(volume));
-    $("#sellvolumestats").html(format8(volume));
+    $("#sellvolume").html(format8(ordertotal));
+    
+    ordertotal = math.multiply(math.bignumber(ordertotal),math.bignumber("100000000"))+"";
+    ordertotal = math.floor(math.bignumber(ordertotal))+"";
+    ordertotal = math.divide(math.bignumber(ordertotal),math.bignumber("100000000"))+"";
+    
+    $("#stats-sells").html(ordertotal);
 	}, "json" );
 	$.post( "api/api",{ method: "getMarketOrders", coin: getUrlVars()['coin'], type: "buy"}, function( data ) {
 	  var rows = "";
-	  var volume = "0";
+	  var ordertotal = "0";
 	  for(var i=0;i<data.result.length;i++){
 	    var price = xpnd(math.eval(data.result[i].price+"/1000"));
 	    var amount = format8(math.eval(data.result[i].amount+"/100000000"));
 	    var total = format8(math.eval(price+"*"+amount+"/100000000"));
-      rows += "<tr><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>";
+	    var thefunction = 'fillForm("'+price+'","'+amount+'","sell")';
+      rows += "<tr onclick='"+thefunction+"' class='order_tr'><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>";
       var toadd = xpnd(math.eval(price+"*"+amount+"/100000000"));
-      volume = xpnd(math.eval(volume+"+"+toadd));
+      ordertotal = xpnd(math.eval(ordertotal+"+"+toadd));
+      
+      if(i == 0){
+        $("#stats-bid").html(price);
+      }
+      
     }
     $("#buyorders").html(rows);
-    $("#buyvolume").html(format8(volume));
-    $("#buyvolumestats").html(format8(volume));
+    $("#buyvolume").html(format8(ordertotal));
+    
+    ordertotal = math.multiply(math.bignumber(ordertotal),math.bignumber("100000000"))+"";
+    ordertotal = math.floor(math.bignumber(ordertotal))+"";
+    ordertotal = math.divide(math.bignumber(ordertotal),math.bignumber("100000000"))+"";
+    
+    $("#stats-buys").html(ordertotal);
 	}, "json" );
+}
+
+function fillForm(price,amount,type){
+  $("#"+type+"order_price").val(price);
+  $("#"+type+"order_size").val(amount);
+  if(type == "buy"){
+    calcbuytotal();
+  }else if(type == "sell"){
+    calcselltotal();
+  }
 }
 
 function loadActiveOrders(){
@@ -378,14 +465,39 @@ function loadActiveOrders(){
 function loadMarketHistory(){
   $.post( "api/api",{ method: "getMarketHistory", coin: getUrlVars()['coin']}, function( data ) {
 	  var rows = "";
+	  var volume24 = "0";
 	  for(var i=0;i<data.result.length;i++){
 	    var date = data.result[i]["creation_time"];
 	    var price = xpnd(math.eval(data.result[i]["price"]+"/1000"));
 	    var amount = format8(math.eval(data.result[i]["amount"]+"/100000000"));
 	    var total = format8(math.eval(price+"*"+amount+"/100000000"));
-	    rows += "<tr><td>"+date+"</td><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>";
+	    rows = "<tr><td>"+date+"</td><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>"+rows;
+	    var marketData = {};
+	    marketData["date"] = new Date(Date.parse(data.result[i]["creation_time"]+"Z"));
+	    marketData["price"] = math.bignumber(math.eval(data.result[i]["price"]+"/1000")+"");
+	    marketData["amount"] = math.bignumber(math.eval(data.result[i]["amount"]+"/100000000")+"");
+	    marketData["total"] = math.bignumber(math.eval(price+"*"+amount+"/100000000")+"");
+	    markethistory.push(marketData);
+	    
+	    var current = new Date(marketData["date"].getTime());
+      var today = new Date();
+      
+      if(Math.abs(current-today) < 24*60*60*1000){
+        volume24 = math.add(math.bignumber(volume24),math.bignumber(math.eval(price+"*"+amount+"/100000000")+""))+"";
+      }
+	    
 	  }
+	  
+	  volume24 = math.multiply(math.bignumber(volume24),math.bignumber("100000000"))+"";
+	  volume24 = math.floor(math.bignumber(volume24))+"";
+	  volume24 = math.divide(math.bignumber(volume24),math.bignumber("100000000"))+"";
+	  
 	  $("#markethistory").html(rows);
+	  $("#stats-volume").html(volume24);
+	  if(amchartsLoaded == true && marketDataLoaded == false){
+	    makeChart();
+	  }
+	  marketDataLoaded = true;
 	}, "json" );
 }
 
@@ -446,6 +558,13 @@ function addTooltip(elm,text){
 }
 
 </script>
+
+<!-- Charts -->
+<script type="text/javascript" src="/charts/amcharts/amcharts.js"></script>
+<script type="text/javascript" src="/charts/amcharts/serial.js"></script>
+<script type="text/javascript" src="/charts/amcharts/themes/light.js"></script>
+<script type="text/javascript" src="/charts/amcharts/amstock.js"></script>
+<script type="text/javascript" src="/js/makeChart.js"></script>
 
 
 <?php include("includes/footer.php"); ?>

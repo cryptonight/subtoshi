@@ -75,3 +75,7 @@ html, body {
 i.help {
     color:#BBB;
 }
+
+.order_tr:hover {
+    background-color:#EEE;
+}

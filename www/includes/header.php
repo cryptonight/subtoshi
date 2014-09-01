@@ -16,6 +16,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/api/_functions.php");
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
         <!--custom css -->
         <link rel="stylesheet" href="/css/custom.css">
+        <!--charts -->
+        <link rel="stylesheet" type="text/css" href="/charts/amcharts/style.css">
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <!-- bootbox -->
