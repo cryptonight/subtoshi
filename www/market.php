@@ -475,7 +475,13 @@ function loadMarketHistory(){
   $.post( "api/api",{ method: "getMarketHistory", coin: getUrlVars()['coin']}, function( data ) {
 	  var rows = "";
 	  var volume24 = "0";
-	  for(var i=0;i<data.result.length;i++){
+	  var start = 0;
+	  if(getUrlVars()['coin'] == "dsh"){
+	    start = 12;
+	  }else if(getUrlVars()['coin'] == "xdn"){
+	    start = 14;
+	  }
+	  for(var i=start;i<data.result.length;i++){
 	    var date = data.result[i]["creation_time"];
 	    var price = xpnd(math.eval(data.result[i]["price"]+"/1000"));
 	    var amount = format8(math.eval(data.result[i]["amount"]+"/100000000"));
