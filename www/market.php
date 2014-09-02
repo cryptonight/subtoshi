@@ -257,7 +257,7 @@
           <div class="panel-body" style="max-height:300px; overflow:auto; padding:10px;">
             <table class="table table-condensed">
             <thead>
-            <tr><th>Date (UTC)</th><th><span class="price">Price (satoshi)</span></th><th><span class="coin"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th></tr>
+            <tr><th>Date (UTC)</th><th>Type</th><th><span class="price">Price (satoshi)</span></th><th><span class="coin"><?php echo strtoupper($_GET['coin']); ?></span></th><th><span class="btc">BTC</span></th></tr>
             </thead>
             <tbody id="markethistory">
             </tbody>
@@ -475,31 +475,44 @@ function loadMarketHistory(){
   $.post( "api/api",{ method: "getMarketHistory", coin: getUrlVars()['coin']}, function( data ) {
 	  var rows = "";
 	  var volume24 = "0";
+	  
+	  //Filters out transactions used for testing / during the closed beta
 	  var start = 0;
 	  if(getUrlVars()['coin'] == "dsh"){
 	    start = 12;
 	  }else if(getUrlVars()['coin'] == "xdn"){
 	    start = 14;
 	  }
+	  toremove = {};
+	  toremove["dsh"] = [129,128,127,126];
+	  toremove["xdn"] = [];
+	  
 	  for(var i=start;i<data.result.length;i++){
-	    var date = data.result[i]["creation_time"];
-	    var price = xpnd(math.eval(data.result[i]["price"]+"/1000"));
-	    var amount = format8(math.eval(data.result[i]["amount"]+"/100000000"));
-	    var total = format8(math.eval(price+"*"+amount+"/100000000"));
-	    rows = "<tr><td>"+date+"</td><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>"+rows;
-	    var marketData = {};
-	    marketData["date"] = new Date(Date.parse(data.result[i]["creation_time"]+"Z"));
-	    marketData["price"] = math.bignumber(math.eval(data.result[i]["price"]+"/1000")+"");
-	    marketData["amount"] = math.bignumber(math.eval(data.result[i]["amount"]+"/100000000")+"");
-	    marketData["total"] = math.bignumber(math.eval(price+"*"+amount+"/100000000")+"");
-	    markethistory.push(marketData);
-	    
-	    var current = new Date(marketData["date"].getTime());
-      var today = new Date();
+	    if(toremove[getUrlVars()['coin']].indexOf(i) == -1){
+  	    var date = data.result[i]["creation_time"];
+  	    var price = xpnd(math.eval(data.result[i]["price"]+"/1000"));
+  	    var amount = format8(math.eval(data.result[i]["amount"]+"/100000000"));
+  	    var total = format8(math.eval(price+"*"+amount+"/100000000"));
+  	    var type = data.result[i].type;
+  	    if(type == undefined){
+  	      type = "";
+  	    }
+  	    rows = "<tr><td>"+date+"</td><td>"+type+"</td><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>"+rows;
+  	    var marketData = {};
+  	    marketData["date"] = new Date(Date.parse(data.result[i]["creation_time"]+"Z"));
+  	    marketData["price"] = math.bignumber(math.eval(data.result[i]["price"]+"/1000")+"");
+  	    marketData["amount"] = math.bignumber(math.eval(data.result[i]["amount"]+"/100000000")+"");
+  	    marketData["total"] = math.bignumber(math.eval(price+"*"+amount+"/100000000")+"");
+  	    markethistory.push(marketData);
+  	    
+  	    var current = new Date(marketData["date"].getTime());
+        var today = new Date();
+        
+        if(Math.abs(current-today) < 24*60*60*1000){
+          volume24 = math.add(math.bignumber(volume24),math.bignumber(math.eval(price+"*"+amount+"/100000000")+""))+"";
+        }
       
-      if(Math.abs(current-today) < 24*60*60*1000){
-        volume24 = math.add(math.bignumber(volume24),math.bignumber(math.eval(price+"*"+amount+"/100000000")+""))+"";
-      }
+	    }
 	    
 	  }
 	  
