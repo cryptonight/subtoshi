@@ -242,7 +242,8 @@ function loadDepositHistory(){
         }else{
           status = data.result[i].confirms+"/6 Confirmations";
         }
-        rows += "<tr><td>"+data.result[i].coin.toUpperCase()+"</td><td>"+amount+" "+data.result[i].coin.toUpperCase()+"</td><td>"+data.result[i].time_stamp+"</td><td>"+status+"</td></tr>";
+        var row = "<tr><td>"+data.result[i].coin.toUpperCase()+"</td><td>"+amount+" "+data.result[i].coin.toUpperCase()+"</td><td>"+data.result[i].time_stamp+"</td><td>"+status+"</td></tr>";
+        rows = row+rows;
       }
       $("#depositHistory").html(rows);
     }, "json");
