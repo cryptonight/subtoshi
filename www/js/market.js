@@ -17,16 +17,16 @@ function confirmBuy(){
 		var fee = xpnd(math.eval(amount+"*0.005")+"");
 		bootbox.confirm("<p><b>Please confirm your buy order</b></p><p><b>Bid </b>"+rate+" satoshi<br/><b>Size </b>"+amount+" "+getUrlVars()['coin'].toUpperCase()+"<br/><b>0.5% Fee </b>"+fee+" "+getUrlVars()['coin'].toUpperCase()+"<br/><b>Total </b>"+total+" BTC</p>", function(result) {
 			if(result){
+				$("#buyorder_price").val("");
+				$("#buyorder_size").val("");
+				$("#buyorder_total").val("");
 				$.post( "api/api",{ method: "addBuyOrder", coin: getUrlVars()['coin'], price: rate, size: amount}, function( data ) {
-					$("#buyorder_price").val("");
-					$("#buyorder_size").val("");
-					$("#buyorder_total").val("");
-				  if(data.result.toLowerCase() != "success"){
-				  	var msg = data.result;
-				  	var thealert = '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1.1em;"></i></strong> '+msg+'</div>';
-				  	$("#alerts").append(thealert);
-				  }
-				  loadData();
+				  	if(data.result.toLowerCase() != "success"){
+				  		var msg = data.result;
+				  		var thealert = '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1.1em;"></i></strong> '+msg+'</div>';
+				  		$("#alerts").append(thealert);
+				  	}
+				  	loadData();
 				}, "json" );
 			}
 		});
@@ -67,7 +67,12 @@ function confirmSell(){
 				$("#sellorder_size").val("");
 				$("#sellorder_total").val("");
 				$.post( "api/api",{ method: "addSellOrder", coin: getUrlVars()['coin'], price: rate, size: amount}, function( data ) {
-				  loadData();
+					if(data.result.toLowerCase() != "success"){
+				  		var msg = data.result;
+				  		var thealert = '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong><i class="fa fa-exclamation-triangle fa-fw" style="font-size:1.1em;"></i></strong> '+msg+'</div>';
+				  		$("#alerts").append(thealert);
+				  	}
+					loadData();
 				}, "json" );
 			}
 		});
