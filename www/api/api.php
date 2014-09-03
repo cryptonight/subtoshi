@@ -1086,10 +1086,10 @@ function cancelWithdrawal($hash){
     $user = '***REMOVED***';
     $pass = '***REMOVED***';
     $db = new PDO($dns, $user, $pass);
-    $stmt = $db->prepare('UPDATE withdrawals SET verified=:verified WHERE verify_hash=:verify_hash AND placed_by=:placed_by');
-    $stmt->execute(array(':verified' => '4',':verify_hash' => $hash, ':placed_by' => $_SESSION['user_id']));
-    $stmt = $db->prepare('UPDATE withdrawals SET verification_time=now() WHERE verify_hash=:verify_hash AND placed_by=:placed_by');
-    $stmt->execute(array(':verify_hash' => $hash, ':placed_by' => $_SESSION['user_id']));
+    $stmt = $db->prepare('UPDATE withdrawals SET verified=:verified WHERE verify_hash=:verify_hash AND placed_by=:placed_by AND verified=:ver');
+    $stmt->execute(array(':verified' => '4',':verify_hash' => $hash, ':placed_by' => $_SESSION['user_id'], ':ver' => '0'));
+    $stmt = $db->prepare('UPDATE withdrawals SET verification_time=now() WHERE verify_hash=:verify_hash AND placed_by=:placed_by AND verified=:ver');
+    $stmt->execute(array(':verify_hash' => $hash, ':placed_by' => $_SESSION['user_id'], ':ver' => '0'));
     return $stmt->rowCount() === 1;
 }
 
