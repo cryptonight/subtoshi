@@ -103,7 +103,7 @@
         </h3>
 
         <p>
-            Any claim relating to Subtoshi.com's website shall be governed by the laws of the State of Washington without regard to its conflict of law provisions.
+            Any claim relating to Subtoshi.com's website shall be governed by the laws of the State of Virginia without regard to its conflict of law provisions.
         </p>
 
         <h3>
