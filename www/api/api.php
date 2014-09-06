@@ -124,6 +124,12 @@ switch ($method) {
     case "cancelOrder":
         $result = cancelOrder(preg_replace("/[^a-zA-Z0-9]+/", "", $_POST['id']));
         break;
+    case "generateAddress":
+        $result = generateAddress($coin);
+        break;
+    case "getAddresses":
+        $result = getAddresses($coin);
+        break;
 }
 
 if(isset($coin)){
@@ -177,10 +183,10 @@ function generateBitcoinAddress(){
     if(count($adds) > 0){
         return "error. already generated bitcoin address.";
     }
-    $url = "http://107.23.128.4/generateBitcoinAddress.php?user_id=".$_SESSION['user_id'];
+    $url = "http://***REMOVED***/generateBitcoinAddress.php?user_id=".$_SESSION['user_id'];
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10); 
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $data = curl_exec($ch);
     curl_close($ch);
@@ -194,9 +200,62 @@ function generateBitcoinAddress(){
     return $data;
 }
 
+function generateAddress($coin){
+    if(count(getAddresses($coin)) > 0){
+        return "error. already generated address.";
+    }
+    $data = coinCurl("generateAddress.php?user_id=".$_SESSION['user_id']."&coin=".$coin);
+    $address = $data["address"];
+    if(!empty($address)){
+        insertAddress($coin,$address);
+        return $address;
+    }
+    return "";
+}
+
+function coinCurl($url_p){
+    $url = "http://***REMOVED***/".$url_p;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $data = curl_exec($ch);
+    curl_close($ch);
+    return json_decode($data,true);
+}
+
+function insertAddress($coin,$address){
+    $dns = 'mysql:host=localhost;dbname=exchange';
+    $user = '***REMOVED***';
+    $pass = '***REMOVED***';
+    $db = new PDO($dns, $user, $pass);
+    $stmt = $db->prepare('INSERT INTO addresses (user_id, address, creation_time, coin) VALUES (:user_id, :address, now(), :coin)');
+    $stmt->execute(array(':user_id' => $_SESSION['user_id'],':address' => $address, ':coin' => $coin));
+    return $data;
+}
+
+function getAddresses($coin){
+    $dns = 'mysql:host=localhost;dbname=exchange';
+    $user = '***REMOVED***';
+    $pass = '***REMOVED***';
+    $db = new PDO($dns, $user, $pass);
+    $statement = $db->prepare("select * from addresses where user_id = :id AND coin = :coin");
+    $statement->execute(array(':id' => $_SESSION['user_id'], ':coin' => $coin));
+    $addresses = array();
+    while( $row = $statement->fetch()) {
+        array_push($addresses, $row['address']);
+    }
+    return $addresses;
+}
+
 function getDeposits($coin){
     //Let's get their payment ids
-    $payment_ids = getPaymentIds($coin);
+    $cointype = getCoinType($coin);
+    if($cointype == "cryptonote"){
+        $payment_ids = getPaymentIds($coin);
+    }else{
+        $payment_ids = getAddresses($coin);
+    }
     $deposits = array();
     
     global $api_key;
@@ -208,7 +267,7 @@ function getDeposits($coin){
         $url = "https://blockchain.info/latestblock?api_code=".$api_key;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10); 
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $data = curl_exec($ch);
         curl_close($ch);
@@ -241,15 +300,15 @@ function getDeposits($coin){
                 }
             }
         }
-    }else{
+    }else if($cointype == "cryptonote"){
     
         //Loop over them getting the deposits to each
         for($i=0;$i<count($payment_ids);$i++){
             //This is the other server that is hosting the wallets
-            $url = "http://107.23.128.4/getDeposits.php?coin=".$coin."&payment_id=".$payment_ids[$i];
+            $url = "http://***REMOVED***/getDeposits.php?coin=".$coin."&payment_id=".$payment_ids[$i];
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10); 
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $data = curl_exec($ch);
             curl_close($ch);
@@ -263,6 +322,8 @@ function getDeposits($coin){
             }
         }
     
+    }else{
+        //Follow general things for like mintcoin
     }
     
     $blockheight = getBlockHeight($coin);
@@ -282,6 +343,17 @@ function getDeposits($coin){
     
     return $deposits;
     
+}
+
+
+function getCoinType($coin){
+    global $coins;
+    for($i=0;$i<count($coins);$i++){
+        if($coins[$i]["ticker"] == $coin){
+            return $coins[$i]["type"];
+        }
+    }
+    return false;
 }
 
 function getDepositHistory(){
@@ -982,10 +1054,10 @@ function confirmWithdrawal($hash){
     $amount = $row['size'];
     $payment_id = $row['payment_id'];
     
-    $url = "http://107.23.128.4/withdraw.php?coin=".$coin."&address=".$address."&amount=".$amount."&payment_id=".$payment_id;
+    $url = "http://***REMOVED***/withdraw.php?coin=".$coin."&address=".$address."&amount=".$amount."&payment_id=".$payment_id;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10); 
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $ch_data = curl_exec($ch);
     curl_close($ch);

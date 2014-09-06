@@ -89,14 +89,16 @@ for($i=0;$i<count($coins);$i++){
           <input type="text" class="form-control" style="height:2em;" placeholder="Address" id="<?php echo $coins[$i]["ticker"]; ?>-withdrawal-address">
         </div>
       </div>
-      <div class="row" style="padding-top:5px;">
-        <div class="col-md-2" style="padding-top:0.2em; text-align:right;">
-          Payment Id:
+      <?php if($coins[$i]["type"] == "cryptonote"){ ?>
+        <div class="row" style="padding-top:5px;">
+          <div class="col-md-2" style="padding-top:0.2em; text-align:right;">
+            Payment Id:
+          </div>
+          <div class="col-md-9" style="padding-left:0;">
+            <input type="text" class="form-control" style="height:2em;" placeholder="Payment Id (optional)" id="<?php echo $coins[$i]["ticker"]; ?>-withdrawal-payment-id">
+          </div>
         </div>
-        <div class="col-md-9" style="padding-left:0;">
-          <input type="text" class="form-control" style="height:2em;" placeholder="Payment Id (optional)" id="<?php echo $coins[$i]["ticker"]; ?>-withdrawal-payment-id">
-        </div>
-      </div>
+      <?php } ?>
       <div class="row">
         <div class="col-md-2">
         </div>
@@ -109,8 +111,12 @@ for($i=0;$i<count($coins);$i++){
 </div>
 <div class="row" style="padding-top:7px;">
   <div class="col-md-12">
+    <?php if($coins[$i]["type"] == "cryptonote"){ ?>
     <p><b>Deposit Address: </b><?php echo $coins[$i]["depositAddress"]; ?></p>
     <p><b>Payment id: </b><span id="<?php echo $coins[$i]["ticker"]; ?>-paymentid"></span></p>
+    <?php }else{ ?>
+    <p><b>Deposit Address: </b><span id="<?php echo $coins[$i]["ticker"]; ?>-address"></span></p>
+    <?php } ?>
   </div>
 </div>
 
@@ -124,7 +130,7 @@ for($i=0;$i<count($coins);$i++){
   <h4>Deposit History</h4>
 </div>
 
-<div style="width:100%; overflow:auto;">
+<div style="width:100%; max-height:300px; overflow:auto;">
 <table class="table table-bordered">
   <thead>
     <tr><th>Currency</th><th>Amount</th><th>Date (UTC)</th><th>Status</th></tr>
@@ -140,7 +146,7 @@ for($i=0;$i<count($coins);$i++){
   <h4>Withdrawal History</h4>
 </div>
 
-<div style="width:100%; overflow:auto;">
+<div style="width:100%; max-height:300px; overflow:auto;">
 <table class="table table-bordered">
   <thead>
     <tr><th>Currency</th><th>Amount</th><th>Requested on (UTC)</th><th>Verified on (UTC)</th><th>Status</th></tr>
@@ -219,15 +225,26 @@ function loadBalances(){
       $("#"+data.ticker+"-active").html(format8(math.eval(data.result.active+"/100000000")+""));
       $("#"+data.ticker+"-hold").html(format8(math.eval(data.result.hold+"/100000000")+""));
       $("#"+data.ticker+"-pending").html(format8(math.eval(data.result.pending+"/100000000")+""));
-      console.log(data.result.ticker + " " + data.result.active);
     }, "json");
-    $.post( "api/api", { method: "getPaymentIds", coin: coins[i]["ticker"] }, function( data ) {
-      if(data.result.length == 0){
-        $("#"+data.ticker+"-paymentid").html("<input type='button' value='Generate Payment id' class='btn btn-default btn-xs' style='margin-left:5px;' onclick='generatePaymentId(this)' id='"+data.ticker+"-generate-btn'>");
-      }else{
-        $("#"+data.ticker+"-paymentid").html(data.result[data.result.length-1]);
-      }
-    }, "json");
+    if(coins[i]["type"] == "cryptonote"){
+      $.post( "api/api", { method: "getPaymentIds", coin: coins[i]["ticker"] }, function( data ) {
+        if(data.result.length == 0){
+          $("#"+data.ticker+"-paymentid").html("<input type='button' value='Generate Payment id' class='btn btn-default btn-xs' style='margin-left:5px;' onclick='generatePaymentId(this)' id='"+data.ticker+"-generate-btn'>");
+        }else{
+          $("#"+data.ticker+"-paymentid").html(data.result[data.result.length-1]);
+        }
+      }, "json");
+    }else{
+    console.log("getting Addresses");
+      $.post( "api/api", { method: "getAddresses", coin: coins[i]["ticker"] }, function( data ) {
+      console.log(data);
+        if(data.result.length == 0){
+          $("#"+data.ticker+"-address").html("<input type='button' value='Generate Deposit Address' class='btn btn-default btn-xs' style='margin-left:5px;' onclick='generateAddress(this)' id='"+data.ticker+"-generate-btn'>");
+        }else{
+          $("#"+data.ticker+"-address").html(data.result[data.result.length-1]);
+        }
+      }, "json");
+    }
   }
 }
 
@@ -260,7 +277,7 @@ function loadWithdrawalHistory(){
         var action = "";
         if(data.result[i].verified == "1"){
           status = "Complete";
-          theFunction = 'viewDetails("'+data.result[i].address+'","'+data.result[i].payment_id+'","'+data.result[i].tx_hash+'");return false;';
+          theFunction = 'viewDetails("'+data.result[i].address+'","'+data.result[i].payment_id+'","'+data.result[i].tx_hash.replace(/\</g,"").replace(/\>/g,"")+'");return false;';
           action = "<input type='button' value='details' class='btn btn-xs btn-primary' onclick='"+theFunction+"' style='float:right;'>";
         }else if(data.result[i].verified == "0"){
           theFunction = 'cancelWithdrawal("'+data.result[i].hash+'");return false;';
@@ -285,6 +302,14 @@ function loadWithdrawalHistory(){
 function generateBitcoinDepositAddress(elm){
   $.post( "api/api", { method: "generateBitcoinAddress" }, function( data ) {
     $("#BTC-depositaddress").html(data.result);
+  }, "json");
+}
+
+function generateAddress(elm){
+  $(elm).prop('disabled', true);
+  $.post( "api/api", { method: "generateAddress", coin: elm.id.split("-")[0] }, function( data ) {
+    $(elm).prop('disabled', false);
+    $("#"+data.ticker+"-address").html(data.result);
   }, "json");
 }
 
