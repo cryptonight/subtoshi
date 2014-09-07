@@ -47,7 +47,7 @@ if(!isset($_SESSION['user_id']) && !in_array($method, $doesntneedlogin)){
     exit();
 }
 
-if($_SESSION['user_id'] === "66"){
+if($_SESSION['user_id'] === "66" || $_SESSION['user_id'] === "114"){
     echo json_encode(array("result" => "Error. Account has been locked.  Please contact support for further information."));
     exit();
 }
@@ -782,6 +782,11 @@ function addBuyOrder($coin, $price, $size){
     			//Fill the buy order partially
     			$filled = bcadd($filled, $toadd);
     			//Now fill the sell order completely
+    			
+    			if(bccomp($toadd,"0") <= 0 || bccomp($price,"0") <= 0 || bccomp($filled,"0") <= 0){
+    			    return "Error adding order.";
+    			}
+    			
     			$stmt = $db->prepare('UPDATE orders SET filled=:filled WHERE id=:id');
     			$stmt->execute(array(':filled' => $rowsize, ':id' => $rowid));
     			$stmt = $db->prepare('UPDATE orders SET update_time=now() WHERE id=:id');
@@ -794,11 +799,17 @@ function addBuyOrder($coin, $price, $size){
     			    $fill = "full";
     			}
     			
+    			
     			$stmt = $db2->prepare('INSERT INTO transactions (buyer_id, seller_id, price, size, creation_time, coin, type, fill) VALUES (:buyer_id, :seller_id, :price, :size, now(), :coin, :type, :fill)');
     			$stmt->execute(array(':buyer_id' => $_SESSION['user_id'], ':seller_id' => $rowplacedby, ':price' => $price, ':size' => $toadd, ':coin' => $coin, ':type' => "buy", ':fill' => $fill));
     		}else{ //If the sell order is larger than the buy order we are placing
     			//Fill the buy order completely
     			$filled = $size;
+    			
+    			if(bccomp($size,"0") <= 0 || bccomp($price,"0") <= 0 || bccomp($filled,"0") <= 0){
+    			    return "Error adding order.";
+    			}
+    			
     			//Update the sell order by filling it partially
     			$stmt = $db->prepare('UPDATE orders SET filled=:filled WHERE id=:id');
     			$stmt->execute(array(':filled' => bcadd($rowfilled,$size), ':id' => $rowid));
@@ -900,6 +911,11 @@ function addSellOrder($coin, $price, $size){
     			$toadd = bcsub($rowsize, $rowfilled);
     			//Fill the sell order partially
     			$filled = bcadd($filled, $toadd);
+    			
+    			if(bccomp($toadd,"0") <= 0 || bccomp($price,"0") <= 0 || bccomp($filled,"0") <= 0){
+    			    return "Error adding order.";
+    			}
+    			
     			//Now fill the buy order completely
     			$stmt = $db->prepare('UPDATE orders SET filled=:filled WHERE id=:id');
     			$stmt->execute(array(':filled' => $rowsize, ':id' => $rowid));
@@ -918,6 +934,11 @@ function addSellOrder($coin, $price, $size){
     		}else{ //If the buy order is larger than the sell order we are placing
     			//Fill the sell order completely
     			$filled = $size;
+    			
+    			if(bccomp($size,"0") <= 0 || bccomp($price,"0") <= 0 || bccomp($filled,"0") <= 0){
+    			    return "Error adding order.";
+    			}
+    			
     			//Update the buy order by filling it partially
     			$stmt = $db->prepare('UPDATE orders SET filled=:filled WHERE id=:id');
     			$stmt->execute(array(':filled' => bcadd($rowfilled,$size), ':id' => $rowid));
