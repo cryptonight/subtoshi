@@ -47,6 +47,11 @@ if(!isset($_SESSION['user_id']) && !in_array($method, $doesntneedlogin)){
     exit();
 }
 
+if($_SESSION['user_id'] === "66"){
+    echo json_encode(array("result" => "Error. Account has been locked.  Please contact support for further information."));
+    exit();
+}
+
 if(isset($_POST['type'])){
 $type = preg_replace("/[^a-zA-Z0-9]+/", "", $_POST['type']);
 }
@@ -952,6 +957,14 @@ function requestWithdrawal($coin,$address,$amount2,$payment_id){
     
     if(bccomp($balance,$amount) < 0){
         return "Error requesting withdrawal.  You do not have enough funds.";
+    }
+    
+    //check for weird transactions
+    $transactions = getTransactionHistory();
+    for($i=0;$i<count($transactions);$i++){
+        if(bccomp($transactions[$i]["amount"],"0") < 0){
+            return "Error requesting withdrawal.  Invalid transactions. Please contact support to resolve this issue."; 
+        }
     }
     
     $amount = bcsub($amount,getFee($coin));
