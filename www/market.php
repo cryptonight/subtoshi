@@ -500,7 +500,8 @@ function loadMarketHistory(){
   	    }
   	    rows = "<tr><td>"+date+"</td><td>"+type+"</td><td>"+price+"</td><td>"+amount+"</td><td>"+total+"</td></tr>"+rows;
   	    var marketData = {};
-  	    marketData["date"] = new Date(Date.parse(data.result[i]["creation_time"]+"Z"));
+  	    var a = (data.result[i]["creation_time"]).split(/[^0-9]/);
+  	    marketData["date"] = new Date (Date.UTC(a[0],a[1]-1,a[2],a[3],a[4],a[5]));
   	    marketData["price"] = math.bignumber(math.eval(data.result[i]["price"]+"/1000")+"");
   	    marketData["amount"] = math.bignumber(math.eval(data.result[i]["amount"]+"/100000000")+"");
   	    marketData["total"] = math.bignumber(math.eval(price+"*"+amount+"/100000000")+"");
@@ -512,7 +513,6 @@ function loadMarketHistory(){
         if(Math.abs(current-today) < 24*60*60*1000){
           volume24 = math.add(math.bignumber(volume24),math.bignumber(math.eval(price+"*"+amount+"/100000000")+""))+"";
         }
-      
 	    }
 	    
 	  }
@@ -523,6 +523,7 @@ function loadMarketHistory(){
 	  
 	  $("#markethistory").html(rows);
 	  $("#stats-volume").html(volume24);
+	  console.log("Volume 24 "+volume24);
 	  if(amchartsLoaded == true && marketDataLoaded == false){
 	    makeChart();
 	  }
