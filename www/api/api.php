@@ -661,7 +661,7 @@ function getBalanceBTC(){
     $out = "0";
     
     //Loop over every coin buy and subtract BTC, and loop over every coin sell and add btc
-    $coins = array("xdn","dsh");
+    $coins = array("xdn","dsh","mint");
     for($i=0;$i<count($coins);$i++){
         $transactions = getTransactions($coins[$i],"sell");
         for($j=0;$j<count($transactions);$j++){
