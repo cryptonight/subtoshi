@@ -348,7 +348,11 @@ bootbox.dialog({
 }
 
 function viewDetails(address,payment_id,tx_hash){
-  bootbox.alert("<div style='width:100%; overflow:auto;'><p><b>Transaction Details</b></p><p><b>Sent to: </b>"+address+"</p><p><b>Payment Id: </b>"+payment_id+"</p><p><b>Tx_hash: </b>"+tx_hash+"</p></div>");
+  var pid = "";
+  if(payment_id.length > 0){
+    pid = "<p><b>Payment Id: </b>"+payment_id+"</p>";
+  }
+  bootbox.alert("<div style='width:100%; overflow:auto;'><p><b>Transaction Details</b></p><p><b>Sent to: </b>"+address+"</p>"+pid+"<p><b>Tx_hash: </b>"+tx_hash+"</p></div>");
 }
 
 </script>

@@ -486,6 +486,7 @@ function loadMarketHistory(){
 	  toremove = {};
 	  toremove["dsh"] = [129,128,127,126];
 	  toremove["xdn"] = [];
+	  toremove["mint"] = [0];
 	  
 	  for(var i=start;i<data.result.length;i++){
 	    if(toremove[getUrlVars()['coin']].indexOf(i) == -1){

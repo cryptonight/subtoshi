@@ -47,11 +47,6 @@ if(!isset($_SESSION['user_id']) && !in_array($method, $doesntneedlogin)){
     exit();
 }
 
-if($_SESSION['user_id'] === "66" || $_SESSION['user_id'] === "114"){
-    echo json_encode(array("result" => "Error. Account has been locked.  Please contact support for further information."));
-    exit();
-}
-
 if(isset($_POST['type'])){
 $type = preg_replace("/[^a-zA-Z0-9]+/", "", $_POST['type']);
 }
@@ -305,7 +300,7 @@ function getDeposits($coin){
                 }
             }
         }
-    }else if($cointype == "cryptonote"){
+    }else if($cointype == "cryptonote" || $cointype="sha256"){
     
         //Loop over them getting the deposits to each
         for($i=0;$i<count($payment_ids);$i++){
@@ -327,8 +322,6 @@ function getDeposits($coin){
             }
         }
     
-    }else{
-        //Follow general things for like mintcoin
     }
     
     $blockheight = getBlockHeight($coin);
@@ -460,15 +453,15 @@ function getDailyStats($coin){
     $user = '***REMOVED***';
     $pass = '***REMOVED***';
     $db = new PDO($dns, $user, $pass);
-    $statement = $db->prepare("select * from transactions where coin = :coin and creation_time > DATE(NOW()) and creation_time < NOW() order by creation_time");
-    $statement->execute(array(':coin' => $coin));
+    $statement = $db->prepare("select * from transactions where coin = :coin and creation_time > DATE(NOW()) and creation_time < NOW() and (hide is null or hide != :hide) order by creation_time");
+    $statement->execute(array(':coin' => $coin, ':hide' => "1"));
     while( $row = $statement->fetch() ) {
     	array_push($transactions, $row['price']);
     }
     
     if(count($transactions === 0)){
-        $statement = $db->prepare("select * from transactions where coin = :coin order by creation_time desc limit 1");
-        $statement->execute(array(':coin' => $coin));
+        $statement = $db->prepare("select * from transactions where coin = :coin and (hide is null or hide != :hide) order by creation_time desc limit 1");
+        $statement->execute(array(':coin' => $coin, ':hide' => "1"));
         while( $row = $statement->fetch() ) {
         	array_push($transactions, $row['price']);
         }
