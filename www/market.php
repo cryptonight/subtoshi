@@ -318,12 +318,23 @@ function resetVariables(){
 
 function loadBalances(){
   $.post( "api/api", { method: "getBalance", coin: getUrlVars()['coin'] }, function( data ) {
+  
+    if(isNaN(data.result.active)){
+      return;
+    }
+  
     var balance = math.eval(data.result.active+"/100000000");
     balance = format8(balance);
     $("#balance-coin").html(balance);
     balance_coin = math.eval(data.result.active+"/100000000")+"";
+    
   }, "json");
   $.post( "api/api", { method: "getBalance", coin: "btc" }, function( data ) {
+  
+    if(isNaN(data.result.active)){
+      return;
+    }
+  
     var balance = math.eval(data.result.active+"/10000000000000000000");
     balance = format8(balance);
     $("#balance-btc").html(balance);
@@ -523,7 +534,6 @@ function loadMarketHistory(){
 	  
 	  $("#markethistory").html(rows);
 	  $("#stats-volume").html(volume24);
-	  console.log("Volume 24 "+volume24);
 	  if(amchartsLoaded == true && marketDataLoaded == false){
 	    makeChart();
 	  }

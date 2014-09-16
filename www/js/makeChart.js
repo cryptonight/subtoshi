@@ -21,7 +21,7 @@ var newPanel;
 var stockPanel;
 
 function generateChartData() {
-    
+
     var hashes = [];
     var days = [];
     var sections = [];
