@@ -300,7 +300,7 @@ function getDeposits($coin){
                 }
             }
         }
-    }else if($cointype == "cryptonote" || $cointype="sha256"){
+    }else if($cointype == "cryptonote" || $cointype=="sha256"){
     
         //Loop over them getting the deposits to each
         for($i=0;$i<count($payment_ids);$i++){
