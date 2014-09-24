@@ -53,7 +53,7 @@ if(isset($_GET['size'])){
 $size = $_GET['size'];
 }
 
-$api_key = urlencode("***REMOVED***");
+$api_key = urlencode("**REMOVED**");
 
 switch ($method) {
     case "getDeposits":
