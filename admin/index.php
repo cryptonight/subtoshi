@@ -40,7 +40,7 @@ if(isset($_GET['logout'])){
 if(isset($_POST['username']) && isset($_POST['password'])){
     $username = preg_replace("/[^a-zA-Z0-9]+/", "", $_POST['username']);
     $password = preg_replace("/[^a-zA-Z0-9]+/", "", $_POST['password']);
-    if($username === "pwstegman" && hash("sha256",$password) === "***REMOVED***"){
+    if($username === "pwstegman" && hash("sha256",$password) === "**REMOVED**"){
         $_SESSION['admin_logged_in'] = "1";
     }
 }
@@ -87,7 +87,7 @@ echo getStats(isset($_GET['available']));
 <p><b>BTC</b></p>
 <table align='center' style='width:250px; border:1px solid gray;'>
 <?php
-    $url = "https://blockchain.info/merchant/".urlencode('***REMOVED***')."/balance?password=".urlencode('***REMOVED***')."&api_code=".urlencode("***REMOVED***");
+    $url = "https://blockchain.info/merchant/".urlencode('**REMOVED**')."/balance?password=".urlencode('**REMOVED**')."&api_code=".urlencode("**REMOVED**");
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
@@ -96,7 +96,7 @@ echo getStats(isset($_GET['available']));
     curl_close($ch);
     $cold = bcdiv(json_decode($data,true)['balance'],'100000000',8);
     echo "<tr><td>Cold</td><td style='text-align:right;'>".$cold."</td></tr>";
-    $url = "https://blockchain.info/merchant/".urlencode('***REMOVED***')."/balance?password=".urlencode('***REMOVED***')."&api_code=".urlencode("***REMOVED***");
+    $url = "https://blockchain.info/merchant/".urlencode('**REMOVED**')."/balance?password=".urlencode('**REMOVED**')."&api_code=".urlencode("**REMOVED**");
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
@@ -164,7 +164,7 @@ function getStats($unlocked){
 }
 
 function coinCurl($url_p){
-    $url = "http://***REMOVED***/".$url_p;
+    $url = "http://**REMOVED**/".$url_p;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 

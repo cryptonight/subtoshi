@@ -57,7 +57,7 @@ if(isset($_POST['size'])){
 $size = $_POST['size'];
 }
 
-$api_key = urlencode("***REMOVED***");
+$api_key = urlencode("**REMOVED**");
 
 switch ($method) {
     case "generatePaymentId":
@@ -156,8 +156,8 @@ function generatePaymentId($coin){
     $hex = bin2hex($bytes);
     $new_payment_id = "" . $hex;
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $stmt = $db->prepare('INSERT INTO addresses (user_id, address, creation_time, coin) VALUES (:user_id, :payment_id, now(), :coin)');
     $stmt->execute(array(':user_id' => $_SESSION['user_id'],':payment_id' => $new_payment_id, ':coin' => $coin));
@@ -166,8 +166,8 @@ function generatePaymentId($coin){
 
 function getBitcoinAddresses(){
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $statement = $db->prepare("select * from addresses where user_id = :id AND coin = :coin");
     $statement->execute(array(':id' => $_SESSION['user_id'], ':coin' => 'btc'));
@@ -183,7 +183,7 @@ function generateBitcoinAddress(){
     if(count($adds) > 0){
         return "error. already generated bitcoin address.";
     }
-    $url = "http://***REMOVED***/generateBitcoinAddress.php?user_id=".$_SESSION['user_id'];
+    $url = "http://**REMOVED**/generateBitcoinAddress.php?user_id=".$_SESSION['user_id'];
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
@@ -192,8 +192,8 @@ function generateBitcoinAddress(){
     curl_close($ch);
     $data = json_decode($data,true)['address'];
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $stmt = $db->prepare('INSERT INTO addresses (user_id, address, creation_time, coin) VALUES (:user_id, :address, now(), :coin)');
     $stmt->execute(array(':user_id' => $_SESSION['user_id'],':address' => $data, ':coin' => "btc"));
@@ -214,7 +214,7 @@ function generateAddress($coin){
 }
 
 function coinCurl($url_p){
-    $url = "http://***REMOVED***/".$url_p;
+    $url = "http://**REMOVED**/".$url_p;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
@@ -226,8 +226,8 @@ function coinCurl($url_p){
 
 function insertAddress($coin,$address){
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $stmt = $db->prepare('INSERT INTO addresses (user_id, address, creation_time, coin) VALUES (:user_id, :address, now(), :coin)');
     $stmt->execute(array(':user_id' => $_SESSION['user_id'],':address' => $address, ':coin' => $coin));
@@ -236,8 +236,8 @@ function insertAddress($coin,$address){
 
 function getAddresses($coin){
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $statement = $db->prepare("select * from addresses where user_id = :id AND coin = :coin");
     $statement->execute(array(':id' => $_SESSION['user_id'], ':coin' => $coin));
@@ -305,7 +305,7 @@ function getDeposits($coin){
         //Loop over them getting the deposits to each
         for($i=0;$i<count($payment_ids);$i++){
             //This is the other server that is hosting the wallets
-            $url = "http://***REMOVED***/getDeposits.php?coin=".$coin."&payment_id=".$payment_ids[$i];
+            $url = "http://**REMOVED**/getDeposits.php?coin=".$coin."&payment_id=".$payment_ids[$i];
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
@@ -327,8 +327,8 @@ function getDeposits($coin){
     $blockheight = getBlockHeight($coin);
     
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $statement = $db->prepare("select * from deposits where user_id = :id AND coin = :coin");
     $statement->execute(array(':id' => $_SESSION['user_id'], ':coin' => $coin));
@@ -356,8 +356,8 @@ function getCoinType($coin){
 
 function getDepositHistory(){
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $statement = $db->prepare("select * from deposits where user_id = :id order by time_stamp");
     $statement->execute(array(':id' => $_SESSION['user_id']));
@@ -372,8 +372,8 @@ function getDepositHistory(){
 
 function getBlockHeight($coin){
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $statement = $db->prepare("select block_height from blockheights where coin = :coin");
     $statement->execute(array(':coin' => $coin));
@@ -382,23 +382,23 @@ function getBlockHeight($coin){
 
 function logBlockHeight($bh,$coin){
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $statement = $db->prepare("select * from blockheights where coin = :coin");
     $statement->execute(array(':coin' => $coin));
     $rows = $statement->rowCount();
     if($rows === 0){
         $dns = 'mysql:host=localhost;dbname=exchange';
-        $user = '***REMOVED***';
-        $pass = '***REMOVED***';
+        $user = '**REMOVED**';
+        $pass = '**REMOVED**';
         $db = new PDO($dns, $user, $pass);
         $stmt = $db->prepare('INSERT INTO blockheights (coin, block_height, creation_time) VALUES (:coin, :block_height, now())');
         $stmt->execute(array(':coin' => $coin, ':block_height' => $bh));
     }else{
         $dns = 'mysql:host=localhost;dbname=exchange';
-        $user = '***REMOVED***';
-        $pass = '***REMOVED***';
+        $user = '**REMOVED**';
+        $pass = '**REMOVED**';
         $db = new PDO($dns, $user, $pass);
         $stmt = $db->prepare('UPDATE blockheights SET block_height=:block_height WHERE coin=:coin AND block_height < :block_height');
         $stmt->execute(array(':block_height' => $bh, ':coin' => $coin));
@@ -409,16 +409,16 @@ function logBlockHeight($bh,$coin){
 
 function logDeposit($coin,$block_height,$amount,$tx_hash,$payment_id,$time_stamp){
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $statement = $db->prepare("select * from deposits where tx_hash = :tx_hash AND coin = :coin");
     $statement->execute(array(':tx_hash' => $tx_hash, ':coin' => $coin));
     $rows = $statement->rowCount();
     if($rows === 0){
         $dns = 'mysql:host=localhost;dbname=exchange';
-        $user = '***REMOVED***';
-        $pass = '***REMOVED***';
+        $user = '**REMOVED**';
+        $pass = '**REMOVED**';
         $db = new PDO($dns, $user, $pass);
         
         $stmt = $db->prepare('INSERT INTO deposits (coin, block_height, amount, tx_hash, payment_id, time_stamp, creation_time, user_id) VALUES (:coin, :block_height, :amount, :tx_hash, :payment_id, :time_stamp, now(), :user_id)');
@@ -429,8 +429,8 @@ function logDeposit($coin,$block_height,$amount,$tx_hash,$payment_id,$time_stamp
 function getOrders($coin, $type){
     $orders = array();
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     //ducknote buy and sell orders
     if($type === "both"){
@@ -450,8 +450,8 @@ function getDailyStats($coin){
     $transactions = array();
     
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $statement = $db->prepare("select * from transactions where coin = :coin and creation_time > DATE(NOW()) and creation_time < NOW() and (hide is null or hide != :hide) order by creation_time");
     $statement->execute(array(':coin' => $coin, ':hide' => "1"));
@@ -478,8 +478,8 @@ function getDailyStats($coin){
 
 function getMarketOrders($coin, $type){
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     
     $statement = $db->prepare("select * from orders where NOT (size = filled) AND (canceled is null OR canceled = 0) AND type = :type AND coin = :coin");
@@ -519,8 +519,8 @@ function getPaymentIds($coin){
         return "error";
     }
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $statement = $db->prepare("select * from addresses where user_id = :id AND coin = :coin");
     $statement->execute(array(':id' => $_SESSION['user_id'], ':coin' => $coin));
@@ -535,8 +535,8 @@ function getPaymentIds($coin){
 function getTransactions($coin,$type){
     $transactions = array();
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     if($type === "buy"){
         $statement = $db->prepare("select * from transactions where buyer_id = :id AND coin = :coin");
@@ -553,8 +553,8 @@ function getTransactions($coin,$type){
 function getTransactionHistory(){
     $transactions = array();
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $statement = $db->prepare("select * from transactions where buyer_id = :id or seller_id = :id");
     $statement->execute(array(':id' => $_SESSION['user_id']));
@@ -573,8 +573,8 @@ function getTransactionHistory(){
 function getMarketHistory($coin){
     $transactions = array();
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $statement = $db->prepare("select * from transactions where coin = :coin");
     $statement->execute(array(':coin' => $coin));
@@ -731,8 +731,8 @@ function addBuyOrder($coin, $price, $size){
     
     //Now we look for sell orders that match this buy order, and fill those orders
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     
     $db = new PDO($dns, $user, $pass);
     
@@ -744,15 +744,15 @@ function addBuyOrder($coin, $price, $size){
     
     //Let's get sql ready to update the sell orders
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     
     //Also, let's get another sql instance ready to log transactions
     //Yes, isn't my naming scheme complicated
     $dns2 = 'mysql:host=localhost;dbname=exchange';
-    $user2 = '***REMOVED***';
-    $pass2 = '***REMOVED***';
+    $user2 = '**REMOVED**';
+    $pass2 = '**REMOVED**';
     $db2 = new PDO($dns2, $user2, $pass2);
     
     //Go through all the sell orders
@@ -817,8 +817,8 @@ function addBuyOrder($coin, $price, $size){
     
     //And finally, add the buy order to the database
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     
     $stmt = $db->prepare('INSERT INTO orders (type, placed_by, price, size, filled, creation_time, coin) VALUES (:type, :placed_by, :price, :size, :filled, now(), :coin)');
@@ -861,8 +861,8 @@ function addSellOrder($coin, $price, $size){
     
     //Now we look for buy orders that match this sell order, and fill those orders
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     
     $db = new PDO($dns, $user, $pass);
     
@@ -874,15 +874,15 @@ function addSellOrder($coin, $price, $size){
     
     //Let's get sql ready to update the buy orders
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     
     //Also, let's get another sql instance ready to log transactions
     //Yes, isn't my naming scheme complicated
     $dns2 = 'mysql:host=localhost;dbname=exchange';
-    $user2 = '***REMOVED***';
-    $pass2 = '***REMOVED***';
+    $user2 = '**REMOVED**';
+    $pass2 = '**REMOVED**';
     $db2 = new PDO($dns2, $user2, $pass2);
     
     //Go through all the buy orders
@@ -946,8 +946,8 @@ function addSellOrder($coin, $price, $size){
     
     //And finally, add the sell order to the database
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     
     $stmt = $db->prepare('INSERT INTO orders (type, placed_by, price, size, filled, canceled, creation_time, coin) VALUES (:type, :placed_by, :price, :size, :filled, :canceled, now(), :coin)');
@@ -996,8 +996,8 @@ function requestWithdrawal($coin,$address,$amount2,$payment_id){
     if(sendWithrawEmail($coin,$amount,$address,$payment_id,$hash) === true){
     
         $dns = 'mysql:host=localhost;dbname=exchange';
-        $user = '***REMOVED***';
-        $pass = '***REMOVED***';
+        $user = '**REMOVED**';
+        $pass = '**REMOVED**';
         $db = new PDO($dns, $user, $pass);
         $stmt = $db->prepare('INSERT INTO withdrawals (placed_by,size,verify_hash,verified,creation_time,address,coin,payment_id,fee) VALUES (:placed_by,:size,:verify_hash,:verified,now(),:address,:coin,:payment_id,:fee)');
         $stmt->execute(array("placed_by" => $_SESSION['user_id'],":size" => $amount,":verify_hash" => $hash,":verified" => "0",":address" => $address,":coin" => $coin,":payment_id" => $payment_id,":fee" => getFee($coin)));
@@ -1028,8 +1028,8 @@ function getFee($coin){
 //for use with calculating balances
 function getWithdrawalsSum($coin){
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $stmt = $db->prepare("select * from withdrawals where coin=:coin and placed_by = :placed_by and (verified = :pending or verified = :complete)");
     $stmt->execute(array(':coin' => $coin, ':placed_by'=>$_SESSION['user_id'], ':pending' => '0', ':complete' => '1'));
@@ -1046,8 +1046,8 @@ function getWithdrawalsSum($coin){
 
 function getWithdrawalHistory(){
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $stmt = $db->prepare("select * from withdrawals where placed_by = :placed_by");
     $stmt->execute(array(':placed_by'=>$_SESSION['user_id']));
@@ -1066,8 +1066,8 @@ function confirmWithdrawal($hash){
     //lookup withdrawal and verify it exists, then verify it and send withdrawal:
     
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $stmt = $db->prepare("select * from withdrawals where verify_hash=:verify_hash and verified = :verified");
     $stmt->execute(array(':verify_hash' => $hash, ':verified'=>'0'));
@@ -1081,7 +1081,7 @@ function confirmWithdrawal($hash){
     $amount = $row['size'];
     $payment_id = $row['payment_id'];
     
-    $url = "http://***REMOVED***/withdraw.php?coin=".$coin."&address=".$address."&amount=".$amount."&payment_id=".$payment_id;
+    $url = "http://**REMOVED**/withdraw.php?coin=".$coin."&address=".$address."&amount=".$amount."&payment_id=".$payment_id;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
@@ -1097,8 +1097,8 @@ function confirmWithdrawal($hash){
     if(isset($result['tx_hash'])){
     
         $dns = 'mysql:host=localhost;dbname=exchange';
-        $user = '***REMOVED***';
-        $pass = '***REMOVED***';
+        $user = '**REMOVED**';
+        $pass = '**REMOVED**';
         $db = new PDO($dns, $user, $pass);
         $stmt = $db->prepare('UPDATE withdrawals SET verified=:verified WHERE verify_hash=:verify_hash');
         $stmt->execute(array(':verified' => '1',':verify_hash' => $hash));
@@ -1112,8 +1112,8 @@ function confirmWithdrawal($hash){
     }else{
         
         $dns = 'mysql:host=localhost;dbname=exchange';
-        $user = '***REMOVED***';
-        $pass = '***REMOVED***';
+        $user = '**REMOVED**';
+        $pass = '**REMOVED**';
         $db = new PDO($dns, $user, $pass);
         $stmt = $db->prepare('UPDATE withdrawals SET verified=:verified WHERE verify_hash=:verify_hash');
         $stmt->execute(array(':verified' => '3',':verify_hash' => $hash));
@@ -1182,8 +1182,8 @@ function sendWithrawEmail($coin,$amount,$address,$payment_id,$hash){
 
 function cancelWithdrawal($hash){
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $stmt = $db->prepare('UPDATE withdrawals SET verified=:verified WHERE verify_hash=:verify_hash AND placed_by=:placed_by AND verified=:ver');
     $stmt->execute(array(':verified' => '4',':verify_hash' => $hash, ':placed_by' => $_SESSION['user_id'], ':ver' => '0'));
@@ -1194,8 +1194,8 @@ function cancelWithdrawal($hash){
 
 function cancelOrder($id){
     $dns = 'mysql:host=localhost;dbname=exchange';
-    $user = '***REMOVED***';
-    $pass = '***REMOVED***';
+    $user = '**REMOVED**';
+    $pass = '**REMOVED**';
     $db = new PDO($dns, $user, $pass);
     $stmt = $db->prepare('UPDATE orders SET canceled=:canceled WHERE id=:id AND placed_by = :placed_by');
 	$stmt->execute(array(':canceled' => '1', ':id' => $id, ':placed_by' => $_SESSION['user_id']));

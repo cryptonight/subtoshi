@@ -15,8 +15,8 @@
  */
 define("DB_HOST", "127.0.0.1");
 define("DB_NAME", "login");
-define("DB_USER", "***REMOVED***");
-define("DB_PASS", "***REMOVED***");
+define("DB_USER", "**REMOVED**");
+define("DB_PASS", "**REMOVED**");
 
 /**
  * Configuration for: Cookies
@@ -35,7 +35,7 @@ define("DB_PASS", "***REMOVED***");
  */
 define("COOKIE_RUNTIME", 1209600);
 define("COOKIE_DOMAIN", ".subtoshi.com");
-define("COOKIE_SECRET_KEY", "***REMOVED***");
+define("COOKIE_SECRET_KEY", "**REMOVED**");
 
 /**
  * Configuration for: Email server credentials
@@ -64,8 +64,8 @@ define("COOKIE_SECRET_KEY", "***REMOVED***");
 define("EMAIL_USE_SMTP", true);
 define("EMAIL_SMTP_HOST", "ssl://smtp.zoho.com");
 define("EMAIL_SMTP_AUTH", true);
-define("EMAIL_SMTP_USERNAME", "***REMOVED***");
-define("EMAIL_SMTP_PASSWORD", "***REMOVED***");
+define("EMAIL_SMTP_USERNAME", "**REMOVED**");
+define("EMAIL_SMTP_PASSWORD", "**REMOVED**");
 define("EMAIL_SMTP_PORT", 465);
 define("EMAIL_SMTP_ENCRYPTION", "ssl");
 
