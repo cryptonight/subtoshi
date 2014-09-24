@@ -125,7 +125,7 @@ function getBitcoinAddresses(){
 }
 
 function coinCurl($url_p){
-    $url = "http://***REMOVED***/".$url_p;
+    $url = "http://**REMOVED**/".$url_p;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
@@ -206,7 +206,7 @@ function getDeposits($coin){
         //Loop over them getting the deposits to each
         for($i=0;$i<count($payment_ids);$i++){
             //This is the other server that is hosting the wallets
-            $url = "http://***REMOVED***/getDeposits.php?coin=".$coin."&payment_id=".$payment_ids[$i];
+            $url = "http://**REMOVED**/getDeposits.php?coin=".$coin."&payment_id=".$payment_ids[$i];
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); 
