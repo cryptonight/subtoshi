@@ -1,3 +1,6 @@
+Edit: The following readme is OUT OF DATE and needs updating.  I will update it later.
+Also, please DO NOT clone yet, I am still cleaning the repo
+
 This server is operating under a 2 server setup.
 
 Port 80 points to /var/www
