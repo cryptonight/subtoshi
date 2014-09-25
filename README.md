@@ -1,7 +1,11 @@
 Edit: The following readme is OUT OF DATE and needs updating.  I will update it later.
 Also, please DO NOT clone yet, I am still cleaning the repo
 
-This server is operating under a 2 server setup.
+Folders:
+1. Admin: Don't worry about this, it's just an admin dash I'm working on
+2. WWW: The exchange's code
+
+This server is operating under a 2 port setup.
 
 Port 80 points to /var/www
 Port 8083 points to /home/ubuntu/git/exchange
