@@ -2,8 +2,8 @@ Edit: The following readme is OUT OF DATE and needs updating.  I will update it 
 Also, please DO NOT clone yet, I am still cleaning the repo
 
 Folders:
-1. Admin: Don't worry about this, it's just an admin dash I'm working on
-2. WWW: The exchange's code
+Admin: Don't worry about this, it's just an admin dash I'm working on
+WWW: The exchange's code
 
 This server is operating under a 2 port setup.
 
