@@ -1,6 +1,8 @@
 Subtoshi
 ------------
 
+Voting branch where I am working on voting for coins to add feature --Pierce
+
 Two branches: dev and master.  Only push to dev, and I (Pierce) can deploy the dev branch to port 8083 (for testing) on subtoshi.com when asked.  The most recent dev branch must be live on port 8083 for testing for 48 hours before a merge with master is acceptable.
 
 Notes (feel free to add stuff here):
