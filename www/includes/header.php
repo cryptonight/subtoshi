@@ -57,6 +57,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/api/_functions.php");
                         <li><a href="/auth/settings"><i class="fa fa-gears"></i> Settings</a></li>
                         <li><a href="/history"><i class="fa fa-book"></i> Transaction History</a></li>
                         <?php } ?>
+                        <li><a href="#">Vote</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <?php session_start(); if(isset($_SESSION['user_id']) && !isset($_GET['logout'])){ ?>
