@@ -17,3 +17,9 @@ Features:
 
 Uses modified code from the php-login project
 https://github.com/panique/php-login
+
+Site (no longer live): subtoshi.com
+
+Bitcoin talk main thread: https://bitcointalk.org/index.php?topic=764158.0
+
+Subtoshi was also discussed in the Dashcoin thread: https://bitcointalk.org/index.php?topic=678232.0
