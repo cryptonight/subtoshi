@@ -23,3 +23,5 @@ Site (no longer live): subtoshi.com
 Bitcoin talk main thread: https://bitcointalk.org/index.php?topic=764158.0
 
 Subtoshi was also discussed in the Dashcoin thread: https://bitcointalk.org/index.php?topic=678232.0
+
+Note: I was in the process of cleaning up the code when I decided to shut down Subtoshi.  I was writing functions to handle things I found myself doing often, for example, making curl calls.  However, I did not have time to replace all the repetative code with the functions I wrote.
